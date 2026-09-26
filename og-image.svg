@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7c6ff0"/>
+      <stop offset="1" stop-color="#5d4fd4"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="1050" cy="90" r="220" fill="#ffffff" opacity="0.05"/>
+  <circle cx="130" cy="560" r="180" fill="#ffffff" opacity="0.05"/>
+  <rect x="80" y="70" width="88" height="88" rx="20" fill="#ffffff" opacity="0.95"/>
+  <text x="124" y="131" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="52" font-weight="700" fill="#5d4fd4" text-anchor="middle">C</text>
+  <text x="200" y="132" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="64" font-weight="800" fill="#ffffff">CortexJ</text>
+  <text x="84" y="250" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="58" font-weight="800" fill="#ffffff">One JVM API. Any model.</text>
+  <text x="84" y="322" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="58" font-weight="800" fill="#ffffff">The best available runtime.</text>
+  <text x="84" y="386" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="26" font-weight="500" fill="#e6e2fc">AI runtime orchestration and model portability for the JVM — Java 8 to 25</text>
+  <rect x="84" y="440" width="640" height="72" rx="14" fill="#1c1917" opacity="0.85"/>
+  <text x="112" y="486" font-family="'JetBrains Mono', Menlo, monospace" font-size="24" fill="#7ee0c0">cortexj run Qwen/Qwen3-8B --prompt "hi"</text>
+  <text x="84" y="574" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="600" fill="#e6e2fc">okostiukevych.github.io/CortexJ-site</text>
+</svg>

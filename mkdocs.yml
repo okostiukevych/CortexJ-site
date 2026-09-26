@@ -1,0 +1,62 @@
+site_name: CortexJ
+site_url: https://okostiukevych.github.io/CortexJ-site/
+site_description: AI runtime orchestration and model portability for the JVM — one API, any model, the best available runtime.
+repo_url: https://github.com/okostiukevych/CortexJ-site
+repo_name: okostiukevych/CortexJ-site
+docs_dir: site-docs
+site_dir: _site
+nav:
+  - Home: docs/index.md
+  - Installation: docs/installation.md
+  - Quickstart: docs/quickstart.md
+  - Concepts:
+      - Models & repositories: docs/concepts/models.md
+      - The execution planner: docs/concepts/planner.md
+      - Runtimes: docs/concepts/runtimes.md
+      - Hardware & memory: docs/concepts/hardware.md
+      - Capabilities: docs/concepts/capabilities.md
+      - Configuration: docs/concepts/configuration.md
+  - CLI reference: docs/cli.md
+  - Integrations: docs/integrations.md
+  - Production: docs/production.md
+  - Declarative API: docs/declarative.md
+  - Converters: docs/converters.md
+  - Provider SPI: docs/providers.md
+  - Reference:
+      - Configuration properties: docs/reference/configuration-properties.md
+      - API stability: docs/reference/api-stability.md
+theme:
+  name: material
+  language: en
+  font:
+    text: Public Sans
+    code: JetBrains Mono
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+    - toc.follow
+extra_css:
+  - assets/brand.css
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - tables
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - toc:
+      permalink: true

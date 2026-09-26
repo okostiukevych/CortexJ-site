@@ -33,7 +33,7 @@ jobs:
       - name: Build docs
         run: mkdocs build --strict
       - name: Overlay landing
-        run: cp index.html styles.css favicon.svg _site/
+        run: cp index.html styles.css favicon.svg og-image.png _site/
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:

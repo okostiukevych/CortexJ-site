@@ -14,6 +14,11 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="CortexJ — one JVM API, any model, the best runtime">
   <meta name="twitter:description" content="AI runtime orchestration and model portability for the JVM. Java 8 to Java 25, local and remote runtimes, explainable deterministic plans.">
+  <meta property="og:image" content="https://okostiukevych.github.io/CortexJ-site/og-image.png">
+  <meta name="twitter:image" content="https://okostiukevych.github.io/CortexJ-site/og-image.png">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"CortexJ","applicationCategory":"DeveloperApplication","operatingSystem":"Linux, macOS, Windows","description":"AI runtime orchestration and model portability platform for the JVM. One API, any compatible model, the best available runtime — Java 8 to 25.","offers":{"@type":"Offer","price":"0"}}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=JetBrains+Mono:wght@400;600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -42,11 +47,11 @@
       <h1 data-rise="2">One JVM API. Any model.<br>The best available runtime.</h1>
       <p class="hero-sub" data-rise="3">The platform answers the infrastructure questions itself — where the model lives, which revision to use, which runtime fits the hardware, whether memory suffices, and what the fallback is. Including <em>why</em> the chosen execution path was selected.</p>
       <div class="cta-row" data-rise="4">
-        <a class="btn-primary" href="#quick-start">Get started</a>
+        <a class="btn-primary" href="/CortexJ-site/docs/quickstart/">Get started</a>
         <a class="btn-ghost" href="#how">How it works</a>
       </div>
       <div class="code-card" data-rise="5">
-        <div class="code-card-head"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="code-card-title">QuickExample.java</span></div>
+        <div class="code-card-head"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="code-card-title">QuickExample.java</span><button class="copy-btn" type="button" aria-label="Copy code">Copy</button></div>
 <pre><code><span class="tk-c">// one dependency — any model, the best available runtime</span>
 CortexJ platform = CortexJ.<span class="tk-f">builder</span>().<span class="tk-f">build</span>();
 
@@ -86,6 +91,18 @@ CortexJ platform = CortexJ.<span class="tk-f">builder</span>().<span class="tk-f
           <h3>Explainable decisions</h3>
           <p>Every plan reports why: hard constraints considered, scores, memory estimates. No mystery paths, no provider-order luck.</p>
         </div>
+      </div>
+      <div class="compare-wrap">
+        <table class="compare">
+          <thead><tr><th></th><th>Hand-rolled bindings</th><th class="hot-col">CortexJ</th></tr></thead>
+          <tbody>
+            <tr><th>Model source</th><td>Per-provider glue code, mutable tags</td><td>Repositories with immutable revisions — local, Hugging Face, HTTP</td></tr>
+            <tr><th>Choosing a runtime</th><td>Hardcoded, trial and error</td><td>Deterministic planner with explanations and fallback chains</td></tr>
+            <tr><th>Memory</th><td>Hope, then OOM</td><td>Header-based estimation enforced as a hard constraint</td></tr>
+            <tr><th>Java versions</th><td>Separate stacks, or no support</td><td>One codebase, Java 8 → 25</td></tr>
+            <tr><th>Reproducibility</th><td>"Works on my machine"</td><td>Pinned lockfiles, verified air-gap bundles</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
@@ -159,13 +176,47 @@ CortexJ platform = CortexJ.<span class="tk-f">builder</span>().<span class="tk-f
     </div>
   </section>
 
+  <section id="status">
+    <div class="container">
+      <p class="label">Status</p>
+      <h2 class="section-title">What ships today</h2>
+      <p class="section-sub">No slideware — every claim below runs in CI on real JDKs. Milestone numbers reference the platform's internal tracker.</p>
+      <div class="stats">
+        <div class="stat"><strong>177</strong><span>tests · 41 suites on JDK 25</span></div>
+        <div class="stat"><strong>164</strong><span>tests on a real JDK 8</span></div>
+        <div class="stat"><strong>15/15</strong><span>CI lanes green — ubuntu · macos · windows</span></div>
+        <div class="stat"><strong>5</strong><span>LTS starters, Java 8 to 25</span></div>
+      </div>
+      <div class="grid">
+        <div class="card"><h3>M0 · Architecture skeleton</h3><p>API, SPI and module boundaries — the enforced layering the platform is built on.</p></div>
+        <div class="card"><h3>M1 · Resolution & cache</h3><p>Model resolution — local, Hugging Face, HTTP — checksum-safe cache, immutable revisions.</p></div>
+        <div class="card"><h3>M2 · Runtime SPI & core</h3><p>ServiceLoader runtime registry, core platform bootstrap, OpenAI-compatible remote provider.</p></div>
+        <div class="card"><h3>M3 · Real llama.cpp execution</h3><p>Managed llama-server bridge: health polling, blocking + SSE streaming, graceful shutdown.</p></div>
+        <div class="card"><h3>M4 · Explainable planner</h3><p>Candidates, hard constraints, scoring, memory estimates — explainable deterministic plans.</p></div>
+        <div class="card"><h3>M5 · Java 8 → 25</h3><p>Platform modules for every LTS line, starters with wrong-JVM detection.</p></div>
+        <div class="card"><h3>M6 · Legacy verified</h3><p>The full shared core builds and tests green on real JDK 8 and JDK 11 — no reduced feature set.</p></div>
+        <div class="card"><h3>M7 · Production</h3><p>Lockfiles, air-gap bundles, OpenTelemetry, Spring AI and LangChain4j adapters.</p></div>
+        <div class="card"><h3>M8 · Extended runtimes</h3><p>DJL provider with an honest engine probe; the remote provider covers vendor endpoints.</p></div>
+        <div class="card"><h3>M9 · Converters & declarative</h3><p>Deterministic GGUF/Safetensors converters, provenance manifests, declarative @ModelPrompt API.</p></div>
+      </div>
+      <span class="status">0.1.0-SNAPSHOT · Maven Central release coming</span>
+    </div>
+  </section>
+
   <section id="quick-start">
     <div class="container">
       <p class="label">Quick start</p>
       <h2 class="section-title">One starter, matching your JVM</h2>
       <p class="section-sub">Add the BOM, add the starter for your JVM line, load a model. The starter validates the JVM at bootstrap — a mismatch fails fast with an actionable diagnostic.</p>
+      <div class="tabs" role="tablist" aria-label="Java version">
+        <button class="tab" data-starter="java8" type="button">Java 8</button>
+        <button class="tab" data-starter="java11" type="button">Java 11</button>
+        <button class="tab" data-starter="java17" type="button">Java 17</button>
+        <button class="tab active" data-starter="java21" type="button">Java 21</button>
+        <button class="tab" data-starter="java25" type="button">Java 25</button>
+      </div>
       <div class="code-card">
-        <div class="code-card-head"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="code-card-title">pom.xml</span></div>
+        <div class="code-card-head"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="code-card-title">pom.xml</span><button class="copy-btn" type="button" aria-label="Copy code">Copy</button></div>
 <pre><code>&lt;<span class="tk-k">dependencyManagement</span>&gt;
     &lt;<span class="tk-k">dependencies</span>&gt;
         &lt;<span class="tk-k">dependency</span>&gt;
@@ -180,7 +231,7 @@ CortexJ platform = CortexJ.<span class="tk-f">builder</span>().<span class="tk-f
 
 &lt;<span class="tk-k">dependency</span>&gt;
     &lt;<span class="tk-k">groupId</span>&gt;io.cortexj&lt;/<span class="tk-k">groupId</span>&gt;
-    &lt;<span class="tk-k">artifactId</span>&gt;cortexj-starter-java21&lt;/<span class="tk-k">artifactId</span>&gt;
+    &lt;<span class="tk-k">artifactId</span>&gt;<span id="starter-artifact">cortexj-starter-java21</span>&lt;/<span class="tk-k">artifactId</span>&gt;
 &lt;/<span class="tk-k">dependency</span>&gt;</code></pre>
       </div>
       <div class="starters">
@@ -191,15 +242,92 @@ CortexJ platform = CortexJ.<span class="tk-f">builder</span>().<span class="tk-f
         <span class="starter-chip">cortexj-starter-java25</span>
       </div>
       <p class="quick-note">The business code is identical across all five starters — pick once, never think about it again.</p>
-      <span class="status">0.1.0-SNAPSHOT · Maven Central release coming</span>
+      <div class="doc-links">
+        <a class="doc-link" href="/CortexJ-site/docs/installation/"><strong>Installation</strong><span>BOM + the starter for your JVM</span></a>
+        <a class="doc-link" href="/CortexJ-site/docs/quickstart/"><strong>Quickstart</strong><span>First generation, explained step by step</span></a>
+        <a class="doc-link" href="/CortexJ-site/docs/concepts/planner/"><strong>Concepts</strong><span>How the planner decides — and why</span></a>
+        <a class="doc-link" href="/CortexJ-site/docs/cli/"><strong>CLI reference</strong><span>doctor · plan · pull · run</span></a>
+      </div>
+    </div>
+  </section>
+  <section id="faq">
+    <div class="container">
+      <p class="label">FAQ</p>
+      <h2 class="section-title">Frequently asked, honestly answered</h2>
+      <div class="faq">
+        <details class="faq-item">
+          <summary>Which Java versions are supported?</summary>
+          <p>All LTS lines — Java 8, 11, 17, 21 and 25 — through dedicated starters. Business code is identical across them; a starter/JVM mismatch fails fast with an actionable diagnostic (<code>CORTEXJ-CONF-0002</code>).</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do I need Python?</summary>
+          <p>No. CortexJ is JVM-only. For local GGUF text generation you point the llama.cpp provider at a <code>llama-server</code> binary; ONNX embeddings run on the bundled ONNX Runtime (CPU).</p>
+        </details>
+        <details class="faq-item">
+          <summary>Is GPU supported?</summary>
+          <p>Honestly: the llama.cpp provider plans GGUF for CPU and GPU; the bundled ONNX Runtime ships the CPU execution provider only. Hardware is probed, never assumed — unusable candidates are rejected with reasons in the plan, not at runtime.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How is this different from Spring AI or LangChain4j?</summary>
+          <p>Those are application frameworks; CortexJ is the runtime layer underneath. It resolves models, plans execution and manages runtimes — and ships adapters that expose CortexJ models as Spring AI / LangChain4j <code>ChatModel</code>, <code>StreamingChatModel</code> and <code>EmbeddingModel</code> implementations, so your framework-side code stays unchanged.</p>
+        </details>
+        <details class="faq-item">
+          <summary>When will it be on Maven Central?</summary>
+          <p>Before a public 1.0: Maven Central publishing, the API stability freeze process and a signed-off production security review are the remaining gates. Until then the platform is <code>0.1.0-SNAPSHOT</code>, documented exactly as it exists.</p>
+        </details>
+      </div>
     </div>
   </section>
 </main>
 <footer>
   <div class="container footer-inner">
-    <p class="footer-tag"><strong>CortexJ</strong> — AI runtime orchestration and model portability for the JVM</p>
-    <p class="footer-meta">© 2026 CortexJ · Apache License 2.0 · <a href="/CortexJ-site/docs/">Documentation</a> · okostiukevych.github.io/CortexJ-site</p>
+    <div class="footer-brand">
+      <a class="brand" href="#top">Cortex<span>J</span></a>
+      <p class="footer-tag">AI runtime orchestration and model portability for the JVM.</p>
+    </div>
+    <nav class="footer-col" aria-label="Documentation">
+      <p class="footer-title">Docs</p>
+      <a href="/CortexJ-site/docs/installation/">Installation</a>
+      <a href="/CortexJ-site/docs/quickstart/">Quickstart</a>
+      <a href="/CortexJ-site/docs/concepts/planner/">Concepts</a>
+      <a href="/CortexJ-site/docs/cli/">CLI reference</a>
+      <a href="/CortexJ-site/docs/production/">Production</a>
+      <a href="/CortexJ-site/docs/reference/api-stability/">API stability</a>
+    </nav>
+    <div class="footer-col">
+      <p class="footer-title">Project</p>
+      <span>Apache License 2.0</span>
+      <span>0.1.0-SNAPSHOT · pre-release</span>
+      <a href="https://github.com/okostiukevych/CortexJ-site">Site source</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p class="footer-meta">© 2026 CortexJ · okostiukevych.github.io/CortexJ-site</p>
   </div>
 </footer>
+<script>
+(function () {
+  document.querySelectorAll(".code-card").forEach(function (card) {
+    var btn = card.querySelector(".copy-btn");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      navigator.clipboard.writeText(card.querySelector("pre").innerText).then(function () {
+        btn.textContent = "Copied";
+        setTimeout(function () { btn.textContent = "Copy"; }, 1500);
+      });
+    });
+  });
+  var starter = document.getElementById("starter-artifact");
+  if (starter) {
+    document.querySelectorAll(".tab").forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        document.querySelectorAll(".tab").forEach(function (t) { t.classList.remove("active"); });
+        tab.classList.add("active");
+        starter.textContent = "cortexj-starter-" + tab.dataset.starter;
+      });
+    });
+  }
+})();
+</script>
 </body>
 </html>

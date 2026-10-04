@@ -93,6 +93,29 @@ CortexJ platform = CortexJ.builder()
     A `scoreAdjustment` can reorder candidates but can never make a memory-oversized
     or task-unsupported candidate viable.
 
+`PolicyDecision.neutral()` is exposed as the example above; a candidate must be
+allowed by every registered policy. For organization-wide rules without code see
+[enterprise runtime policy](../production.md#enterprise-runtime-policy) — a
+centrally supplied properties file applied to every plan.
+
+## Benchmark hints
+
+Besides policies, the planner consults a locally supplied benchmark file —
+`benchmarks.properties` in the platform working directory (or
+`-Dcortexj.benchmarks.file=<path>`):
+
+```properties
+bench.llamacpp,qwen3,*,cpu,throughputTokensPerSecond=85
+bench.onnx,qwen3,*,cpu,throughputTokensPerSecond=40
+```
+
+The runtime/family/quantization segments may be `*` (the family matches as a
+lowercase substring of the model reference). Scoring is a bounded, deterministic
+function of the file alone — no learning: the same file always produces the same
+plan, and applied adjustments appear in the explanation
+(`benchmark:throughput 85.0 t/s (+15)`). Malformed entries are ignored with a
+WARNING. See [benchmark hints](../production.md#benchmark-hints).
+
 ## Lockfile enforcement
 
 A lockfile pins a plan (`PINNED_PLAN`) and the model revision (`PINNED_MODEL`):
@@ -104,7 +127,9 @@ java -jar cortexj-cli-*.jar run Qwen/Qwen3-8B --lockfile release.lock
 
 Running with `--lockfile` must reproduce the locked runtime and artifact, or fail
 with `CORTEXJ-PLAN-4002` and a full explanation. Revision drift is detected
-separately. See [Production](../production.md#lockfiles).
+separately. When the lockfile pins an artifact sha256, the resolved artifact's
+checksum must match — a swapped binary under the same file name is rejected. See
+[Production](../production.md#lockfiles).
 
 ## Ask first
 

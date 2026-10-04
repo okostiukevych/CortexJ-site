@@ -50,7 +50,10 @@ The `llamacpp` provider plans GGUF models and executes them locally through a
 **managed `llama-server` process**: the provider starts `llama-server` with the
 resolved artifact, polls its health endpoint, then serves blocking generation and SSE
 token streaming through its OpenAI-compatible API. The process is shut down when the
-model handle closes.
+model handle closes. The bridge is `STATELESS` — llama-server is a concurrent HTTP
+server, so concurrent generations on one `ModelHandle` overlap instead of
+serializing. The spawned child receives an allowlisted environment (no secrets from
+the parent JVM) and streaming tokens support cancellation with bounded idle timeouts.
 
 The probe finds the binary via `CORTEXJ_LLAMACPP_SERVER` /
 `cortexj.llamacpp.server` (or standard install prefixes) and also checks
@@ -94,6 +97,26 @@ entirely in [offline mode](../production.md#offline-mode).
 The `djl` provider probes the DJL engine honestly — the engine artifacts stay
 optional. When they are added, the provider serves ONNX embeddings through the shared
 `HfTokenizer` pipeline.
+
+## Isolated native worker
+
+Native runtimes can crash the JVM. Worker mode hosts a runtime inside a child JVM
+and proxies it over an NDJSON stdio protocol — crash isolation without changing the
+public model API:
+
+```java
+CortexJ platform = CortexJ.builder()
+        .runtimeProvider(new IsolatedRuntimeProvider("onnx"))
+        .build();
+```
+
+The provider (module `cortexj-runtime-isolated`) spawns
+`io.cortexj.worker.WorkerHost` (`cortexj-worker`) lazily, verifies the handshake,
+and translates probe/open/load/execute/stream across the pipe. A dead child surfaces
+as typed errors and respawns on the next probe; no orphaned processes (destroy
+ladder), and cancellation propagates to the child generation. See
+[Production](../production.md#isolated-native-worker) and `docs/isolated-worker.md`
+in the repository.
 
 ## GraalVM / native image
 

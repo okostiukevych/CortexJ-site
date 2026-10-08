@@ -5,7 +5,7 @@ the direct API stays the source of truth.
 
 ## Spring AI
 
-`cortexj-spring-ai` exposes a loaded CortexJ model as a Spring AI 1.0.x `ChatModel`,
+`cortexj-spring-ai` exposes a loaded CortexJ model as a Spring AI 1.0.7 `ChatModel`,
 `StreamingChatModel` and `EmbeddingModel`. Requires Java 17+.
 
 ```xml
@@ -63,7 +63,7 @@ vLLM / llama-server / gateways.
 
 ## LangChain4j
 
-`cortexj-langchain4j` exposes a loaded CortexJ model as LangChain4j 1.0.x `ChatModel`,
+`cortexj-langchain4j` exposes a loaded CortexJ model as LangChain4j 1.21.x `ChatModel`,
 `StreamingChatModel` and `EmbeddingModel`. Requires Java 17+.
 
 ```xml

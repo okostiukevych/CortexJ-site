@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CortexJ — AI runtime orchestration and model portability for the JVM</title>
-  <meta name="description" content="One JVM API. Any compatible model. The best available runtime. From legacy Java 8 applications to modern Java 25 systems, across interchangeable local and remote runtimes.">
+  <title>CortexJ Runtime — portable AI execution for the JVM</title>
+  <meta name="description" content="One JVM API. Compatible models. The best available runtime. Production AI from Java 8 to Java 25+, without mandatory Python.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <meta name="theme-color" content="#fafaf9">
   <meta property="og:type" content="website">
   <meta property="og:title" content="CortexJ — one JVM API, any model, the best runtime">
-  <meta property="og:description" content="AI runtime orchestration and model portability for the JVM. Java 8 to Java 25, local and remote runtimes, explainable deterministic plans.">
+  <meta property="og:description" content="CortexJ Runtime — portable AI execution for the JVM. Java 8 to Java 25, local and remote runtimes, explainable deterministic plans.">
   <meta property="og:url" content="https://okostiukevych.github.io/CortexJ-site/">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="CortexJ — one JVM API, any model, the best runtime">
-  <meta name="twitter:description" content="AI runtime orchestration and model portability for the JVM. Java 8 to Java 25, local and remote runtimes, explainable deterministic plans.">
+  <meta name="twitter:description" content="CortexJ Runtime — portable AI execution for the JVM. Java 8 to Java 25, local and remote runtimes, explainable deterministic plans.">
   <meta property="og:image" content="https://okostiukevych.github.io/CortexJ-site/og-image.png">
   <meta name="twitter:image" content="https://okostiukevych.github.io/CortexJ-site/og-image.png">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"CortexJ","applicationCategory":"DeveloperApplication","operatingSystem":"Linux, macOS, Windows","description":"AI runtime orchestration and model portability platform for the JVM. One API, any compatible model, the best available runtime — Java 8 to 25.","offers":{"@type":"Offer","price":"0"}}
+  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"CortexJ","applicationCategory":"DeveloperApplication","operatingSystem":"Linux, macOS, Windows","description":"CortexJ Runtime — portable AI execution for the JVM. One API, compatible models, the best available runtime — Java 8 to 25.","offers":{"@type":"Offer","price":"0"}}
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,8 +43,8 @@
 <main id="top">
   <section class="hero">
     <div class="container hero-inner">
-      <p class="pill" data-rise>AI runtime orchestration & model portability for the JVM</p>
-      <h1 data-rise="2">One JVM API. Any model.<br>The best available runtime.</h1>
+      <p class="pill" data-rise>Portable AI execution for the JVM</p>
+      <h1 data-rise="2">One JVM API. Compatible models.<br>The best available runtime.</h1>
       <p class="hero-sub" data-rise="3">The platform answers the infrastructure questions itself — where the model lives, which revision to use, which runtime fits the hardware, whether memory suffices, and what the fallback is. Including <em>why</em> the chosen execution path was selected.</p>
       <div class="cta-row" data-rise="4">
         <a class="btn-primary" href="/CortexJ-site/docs/quickstart/">Get started</a>
@@ -179,12 +179,12 @@ CortexJ platform = CortexJ.<span class="tk-f">builder</span>().<span class="tk-f
   <section id="status">
     <div class="container">
       <p class="label">Status</p>
-      <h2 class="section-title">What ships today</h2>
-      <p class="section-sub">No slideware — every claim below runs in CI on real JDKs. Milestone numbers reference the platform's internal tracker.</p>
+      <h2 class="section-title">What ships today: P0 · Runtime</h2>
+      <p class="section-sub">No slideware — every claim below is verified locally on JDK 25 (see the test matrix). Milestone cards below track the shipped Runtime foundation (spec v3.0 P0); future tracks (Lab, Data, Train, Tensor, Research) are explicitly out of scope until their gates pass.</p>
       <div class="stats">
-        <div class="stat"><strong>177</strong><span>tests · 41 suites on JDK 25</span></div>
-        <div class="stat"><strong>164</strong><span>tests on a real JDK 8</span></div>
-        <div class="stat"><strong>15/15</strong><span>CI lanes green — ubuntu · macos · windows</span></div>
+        <div class="stat"><strong>548</strong><span>tests · 132 classes on JDK 25</span></div>
+        <div class="stat"><strong>0</strong><span>SpotBugs findings, full reactor</span></div>
+        <div class="stat"><strong>prepared</strong><span>CI lanes (gated to save minutes — see README)</span></div>
         <div class="stat"><strong>5</strong><span>LTS starters, Java 8 to 25</span></div>
       </div>
       <div class="grid">

@@ -35,9 +35,9 @@ java -jar cortexj-cli-*.jar bundle create ./local-model.gguf --out ./release-bun
 
 The bundle directory contains:
 
-- `cortexj-model.json` — the manifest: model id, resolved immutable revision,
-    architecture, license, tasks, and per-artifact entries with **computed sha256**
-    and size;
+- `cortexj-model.json` — the manifest: schema version, model id, resolved
+    immutable revision, architecture, license, tasks, and per-artifact entries
+    with **computed sha256** and size;
 - all model artifacts (weights plus tokenizer/config files when published);
 - checksums for every file.
 
@@ -49,8 +49,10 @@ Verify before deployment:
 java -jar cortexj-cli-*.jar bundle verify ./release-bundle
 ```
 
-Checks: manifest present and parseable, every artifact file exists, declared size
-matches, declared sha256 matches (tampering is reported explicitly), artifact paths
+Checks: manifest present and parseable, schema major version supported
+(unknown majors fail verification; version-less legacy manifests read as
+1.x), every artifact file exists, declared size matches, declared sha256
+matches (tampering is reported explicitly), artifact paths
 stay inside the bundle (path-traversal safe). The exit code is non-zero on any issue.
 
 Run from a bundle offline — a bundle is itself a local repository:
@@ -67,8 +69,10 @@ java -jar cortexj-cli-*.jar run Qwen/Qwen3-8B --lockfile release.lock
 ```
 
 `--lockfile` enforces `PINNED_PLAN`: the planner must reproduce the locked runtime and
-artifact or fail with `CORTEXJ-PLAN-4002` and a full explanation. Revision drift is
-detected separately (the resolved revision must equal the locked revision). When the
+artifact or fail with `CORTEXJ-PLAN-4002` and a full explanation. Lockfiles carry
+a `lockfileVersion` (`1.0`); unknown schema majors fail typed instead of being
+misread. Revision drift is detected separately (the resolved revision must equal
+the locked revision). When the
 lockfile pins an artifact sha256, the resolved artifact's checksum must match it — a
 different binary under the same file name is rejected at plan time. The
 `cortexj:verify` Maven plugin cross-checks the lockfile against the bundle manifest
@@ -84,7 +88,8 @@ CortexJ platform = CortexJ.builder()
 
 - `TRUSTED_ONLY` — loading a model whose descriptor carries a `trustNote` (plain
     HTTP served, community upload, unverified checksums) fails with
-    `CORTEXJ-SEC-10001` and remediation.
+    `CORTEXJ-SEC-10001` and remediation. A missing note additionally requires
+    an artifact checksum — unchecked local files no longer bypass the policy.
 - `ALLOW_UNSIGNED_WITH_WARNING` (default) — the model loads and a WARNING platform
     event is recorded.
 - `CUSTOM` — decisions delegated to your
@@ -117,9 +122,11 @@ repository always does; Hugging Face marks community models.
 
 ## Credentials and privacy
 
-- Tokens are supplied via `TokenSupplier` (`CortexJBuilder.tokenSupplier(...)`,
-    `CORTEXJ_REMOTE_API_KEY`, `HF_TOKEN` / `HUGGING_FACE_HUB_TOKEN`).
-- Tokens are never logged and never appear in error messages or plan explanations.
+- Tokens are supplied via `TokenSupplier` (`CortexJBuilder.tokenSupplier(...)`),
+    `CortexJBuilder.remoteApiKey(...)`, `CORTEXJ_REMOTE_API_KEY`, `CORTEXJ_HF_TOKEN`
+    / `HF_TOKEN`. System-property credentials warn loudly (`jcmd`/dumps exposure).
+- Tokens are never logged and never appear in error messages or plan explanations
+    (presigned URL queries and userinfo are redacted in download/resolution errors).
 - Prompts and responses are not logged by default; platform events carry only
     metadata (runtime, model, artifact, durations, byte counts).
 
@@ -176,8 +183,9 @@ Behavior notes:
 
 - The file is applied automatically at platform construction; the effective policy
     file path is logged at INFO.
-- An unreadable file is NOT applied and logs a WARNING (fail-open by design: an ops
-    typo must not silently disable the platform) — check the logs after rollout.
+- A present-but-unreadable (or corrupt) policy file **fails platform bootstrap**
+    with `CORTEXJ-CONF-0003` (fail-closed) — fix permissions/syntax or remove
+    the file to start without a policy.
 - A file that declares no restrictions is ignored with a WARNING (no silent no-ops).
 - The policy composes with user-supplied `ExecutionPolicy` instances from the
     builder; all of them must allow a candidate.
@@ -227,6 +235,22 @@ over an NDJSON stdio protocol. A dead or hung child surfaces as typed CortexJ er
 waitFor → destroyForcibly ladder guarantees no orphans. Streaming tokens flow through
 the worker and cancellation stops the child generation. See
 `docs/isolated-worker.md` in the repository for the protocol and v1 limitations.
+
+## Embedded server
+
+One server instance serves one loaded model over OpenAI-compatible routes.
+Capacity is split by design: streams wait on a dedicated pool, unary
+generations on a bounded pool with a ceiling:
+
+- generation parameters are range-checked (`temperature` in [0, 2],
+    `max_tokens` in [1, 1000000], `top_p` in [0, 1]); unknown message
+    roles and oversized batches fail with typed 400s;
+- a stuck unary generation answers 504 after
+    `cortexj.server.generateTimeoutMillis` (default 30 min);
+- saturation (streams or unary) answers 503 with `Retry-After`;
+- bearer failures are throttled per IP (5 per 60 s → 60 s block, 429);
+- non-loopback binds require plaintext-HTTP awareness: terminate TLS at a
+    reverse proxy, the server itself speaks plain HTTP.
 
 ## Observability
 

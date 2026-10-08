@@ -52,9 +52,11 @@ with `cortexj-starter-java8`* — before any of your code runs.
 
 ## Tokens and credentials
 
-Tokens are supplied programmatically via `CortexJBuilder.tokenSupplier(...)`, or
-through `CORTEXJ_REMOTE_API_KEY`, `HF_TOKEN` / `HUGGING_FACE_HUB_TOKEN` (also
-`CORTEXJ_HF_TOKEN`).
+Tokens are supplied programmatically via `CortexJBuilder.tokenSupplier(...)`
+(HF repository tokens) or `CortexJBuilder.remoteApiKey(...)` (remote runtime),
+or through `CORTEXJ_REMOTE_API_KEY`, `CORTEXJ_HF_TOKEN` / `HF_TOKEN`.
+System-property credentials (`cortexj.remote.api.key`, `cortexj.hf.token`)
+warn loudly — system properties surface in `jcmd` and crash dumps.
 
 !!! note "Credentials are never logged"
     Tokens never appear in logs, error messages or plan explanations. Prompts and

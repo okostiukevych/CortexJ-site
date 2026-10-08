@@ -1,9 +1,10 @@
 # CortexJ
 
-CortexJ is an AI runtime orchestration and model portability platform for the JVM.
-One JVM API — any compatible model — the best available runtime. From legacy Java 8
-applications to modern Java 25 systems, across interchangeable local and remote
-runtimes.
+**CortexJ Runtime — portable AI execution for the JVM.**
+
+One JVM API — compatible models — the best available runtime. Production AI from
+legacy Java 8 applications to modern Java 25 systems, across interchangeable
+local and remote runtimes, without mandatory Python.
 
 The platform answers the infrastructure questions itself: where the model lives, which
 revision to use, which artifacts are compatible, which runtimes are installed, what

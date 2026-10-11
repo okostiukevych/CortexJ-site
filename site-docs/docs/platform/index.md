@@ -1,11 +1,11 @@
 # The CortexJ platform
 
 CortexJ Runtime (this site's main section) is the first production product of a
-larger platform. Spec v3.0 defines the long-term tracks P1–P11 — an end-to-end JVM
-AI environment from experimentation to production. Several of those tracks are
-already implemented in the repository and verified (JShell lab, data frames,
-experiments, LoRA/PEFT, tensor + autograd, distributed collectives, research
-cards) — they ship as **incubating `0.x` modules**.
+larger platform: an end-to-end JVM AI environment from experimentation to
+production. The tracks below are already implemented in the repository and
+verified (JShell lab, data frames, experiments, LoRA/PEFT, tensor + autograd,
+distributed collectives, research cards) — they ship as **incubating `0.x`
+modules**.
 
 !!! warning "Two-level messaging, deliberately"
     The Runtime is the production product: Java 8 baseline, TCK-verified
@@ -16,19 +16,19 @@ cards) — they ship as **incubating `0.x` modules**.
 
 ## The tracks
 
-| Track | Spec | Modules today | Maturity |
+| Track | Modules today | Maturity |
 |---|---|---|---|
-| Runtime / inference | P0 | `cortexj-api` … `cortexj-server`, CLI | beta (1.0 DoD recorded) |
-| Lab / Notebook | P1 | `cortexj-lab-api` (JShell session), `cortexj-notebook` (Jupyter kernel) | incubating |
-| Data | P2 | `cortexj-data-api` + CSV / Parquet / JDBC / Tablesaw / Arrow / JSON / Tribuo adapters | incubating |
-| Experiments | P3 | `cortexj-experiments-api`, `cortexj-experiments-local` | incubating |
-| Training & PEFT | P4 / P6 | `cortexj-train-api`, `cortexj-train-peft` (LoRA), DJL/remote backends | incubating |
-| PyTorch interop | P5 | `cortexj-convert-safetensors`, LoRA safetensors, optional LibTorch backend | incubating |
-| Tensor | P7 | `cortexj-tensor-api`, CPU reference + Vector backends, optional LibTorch | incubating |
-| Autograd | P8 | `cortexj-autograd` (tape graph, differential tests) | incubating |
-| NN modules | P9 | `cortexj-nn` (Linear, sharded linear, pipeline) | incubating |
-| Distributed training | P10 | `cortexj-train-multinode` (collectives, data-parallel, topology planner) | incubating |
-| Research ecosystem | P11 | `cortexj-research` (model/dataset cards, citations), benchmarks module | incubating |
+| Runtime / inference | `cortexj-api` … `cortexj-server`, CLI | beta |
+| Lab / Notebook | `cortexj-lab-api` (JShell session), `cortexj-notebook` (Jupyter kernel) | incubating |
+| Data | `cortexj-data-api` + CSV / Parquet / JDBC / Tablesaw / Arrow / JSON / Tribuo adapters | incubating |
+| Experiments | `cortexj-experiments-api`, `cortexj-experiments-local` | incubating |
+| Training & PEFT | `cortexj-train-api`, `cortexj-train-peft` (LoRA), DJL/remote backends | incubating |
+| PyTorch interop | `cortexj-convert-safetensors`, LoRA safetensors, optional LibTorch backend | incubating |
+| Tensor | `cortexj-tensor-api`, CPU reference + Vector backends, optional LibTorch | incubating |
+| Autograd | `cortexj-autograd` (tape graph, differential tests) | incubating |
+| NN modules | `cortexj-nn` (Linear, sharded linear, pipeline) | incubating |
+| Distributed training | `cortexj-train-multinode` (collectives, data-parallel, topology planner) | incubating |
+| Research ecosystem | `cortexj-research` (model/dataset cards, citations), benchmarks module | incubating |
 
 ## The reference chain
 

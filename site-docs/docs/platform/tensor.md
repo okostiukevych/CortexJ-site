@@ -1,6 +1,6 @@
 # Tensor & Autograd
 
-The Tensor track (spec P7), Autograd (P8) and NN modules (P9) give the JVM an
+The Tensor track, Autograd and NN modules give the JVM an
 engine-neutral math stack: tensors with a backend SPI, a tape-based gradient
 graph with differential tests, and composable neural modules. Modules:
 `cortexj-tensor-api` + backends, `cortexj-autograd`, `cortexj-nn`.
@@ -18,7 +18,7 @@ Tensor b = cpu.create(new double[]{5, 6, 7, 8}, Shape.of(2, 2), DType.F32, Devic
 Tensor c = cpu.matmul(a, b);
 c.get(0, 1);          // scalar read by index
 c.toArray();          // copy out (never the internal storage)
-c.isView();           // views alias parent storage (ADR-024: closing a view never frees the parent)
+c.isView();           // views alias parent storage: closing a view never frees the parent
 ```
 
 ### Backend operations
@@ -37,8 +37,8 @@ Every backend implements the same surface (parity-checked):
 | Backend | Module | Role |
 |---|---|---|
 | CPU reference | `cortexj-tensor-cpu` | the correctness baseline — plain Java, runs everywhere |
-| Vector | `cortexj-tensor-vector` | Java Vector API path (JIT-vs-vector trade-offs documented in ADR-025; raw backend numbers are never attributed to the platform) |
-| LibTorch | `cortexj-tensor-libtorch` | optional native bridge (PyTorch interop, spec P5); skips loudly without the native engine |
+| Vector | `cortexj-tensor-vector` | Java Vector API path (JIT-vs-vector trade-offs are benchmarked honestly; raw backend numbers are never attributed to the platform) |
+| LibTorch | `cortexj-tensor-libtorch` | optional native bridge (PyTorch interop); skips loudly without the native engine |
 
 The **conformance suite** runs every backend against the same parity checks
 (`TensorConformanceTest`): a backend that disagrees with the reference fails its
@@ -79,7 +79,7 @@ Correctness is **differential**: every op's gradients are compared against
 finite-difference references within tolerance (`AutogradDifferentialTest`) —
 the suite that lets you trust the numbers.
 
-## NN modules (spec P9)
+## NN modules
 
 `cortexj-nn` provides the module API — parameter registration, reusable layers,
 state-dict round-trip, train/eval mode:

@@ -1,9 +1,9 @@
 # Lab & Notebook
 
-The Lab track (spec P1) gives JVM developers an interactive AI workflow without
+The Lab track gives JVM developers an interactive AI workflow without
 switching to a Python notebook. Everything runs on the JVM itself — no Python
 kernel, no sidecar. Modules: `cortexj-lab-api` (JShell session),
-`cortexj-notebook` (Jupyter kernel). Requires Java 17+ (ADR-017).
+`cortexj-notebook` (Jupyter kernel). Requires Java 17+.
 
 ## LabSession
 

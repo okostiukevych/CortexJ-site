@@ -1,6 +1,6 @@
 # Data
 
-The Data track (spec P2) is the single data abstraction behind Lab, Train and
+The Data track is the single data abstraction behind Lab, Train and
 evaluation: typed frames, datasets, deterministic splits and fingerprinting.
 Modules: `cortexj-data-api` plus one adapter module per source.
 

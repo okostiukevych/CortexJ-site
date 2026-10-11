@@ -1,7 +1,7 @@
 # Converters
 
 When no direct artifact is viable, the planner can propose a **deterministic
-conversion** as part of the plan (the "Level C" path). Originals always stay
+conversion** as part of the plan. Originals always stay
 immutable; converted outputs land in the cache with a provenance manifest.
 
 ## GGUF F32 ↔ F16
@@ -34,7 +34,7 @@ The safetensors converter re-containerizes Safetensors checkpoints into GGUF:
 
 - F32 / F16 / BF16 and integer dtypes are supported;
 - metadata is derived from the model's `config.json`, with honest provenance;
-- verified end-to-end through Level C planning — a safetensors-only model is routed
+- verified end-to-end through planning — a safetensors-only model is routed
     through conversion when no direct GGUF artifact exists.
 
 ## Provenance guarantees

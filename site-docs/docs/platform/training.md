@@ -1,10 +1,10 @@
 # Training & PEFT
 
-The Training track (spec P4 + P6) is a unified JVM training API over pluggable
+The Training track is a unified JVM training API over pluggable
 backends, with LoRA as the practical adaptation path and standard safetensors as
-the interop container (spec P5). Modules: `cortexj-train-api`,
+the interop container. Modules: `cortexj-train-api`,
 `cortexj-train-peft`, backend modules (`cortexj-train-djl`, `cortexj-train-remote`)
-and `cortexj-train-multinode` (spec P10).
+and `cortexj-train-multinode` (distributed).
 
 ## The training contract
 
@@ -73,7 +73,7 @@ float[][] merged = adapter.merge(baseWeights);
 - Shape mismatches fail typed — never silently broadcast.
 - The merge is the exact adapter math; `merge` is pure and repeatable.
 
-## Safetensors interop (spec P5)
+## Safetensors interop
 
 ```java
 // ship it: standard container, readable by any compliant parser
@@ -98,9 +98,9 @@ The full path (DJL PyTorch engine → trained delta → safetensors container �
 checksum → provenance) is exercised by `DjlLiveTrainingTest`, which **skips
 loudly** without the engine artifacts — the API surface and LoRA math are the
 verified 0.x scope, the live engine run is opt-in. No PyTorch-replacement
-claims: the goal is interop (spec G-013).
+claims: the goal is interop.
 
-## Distributed training (spec P10)
+## Distributed training
 
 `cortexj-train-multinode` implements data-parallel scale-out over ZeroMQ:
 
@@ -110,8 +110,7 @@ claims: the goal is interop (spec G-013).
 - **MultiNodeDataParallel** — the data-parallel driver (`MultiNodeDataParallelTest`);
 - **TopologyPlanner** — plans the communication topology.
 
-Tensor and pipeline parallelism are future scope pending an ADR (spec marks
-them "later").
+Tensor and pipeline parallelism are future scope on the roadmap.
 
 ## The full chain
 

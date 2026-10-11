@@ -205,18 +205,18 @@ CortexJ platform = CortexJ.<span class="tk-f">builder</span>().<span class="tk-f
     <div class="container">
       <p class="label">Beyond inference</p>
       <h2 class="section-title">The platform tracks are shipped</h2>
-      <p class="section-sub">Spec v3.0 defines the long-term platform. The tracks below are implemented, tested and documented today as incubating 0.x modules — the Runtime stays the production product, no PyTorch-replacement claims.</p>
+      <p class="section-sub">CortexJ is more than an inference runtime. The tracks below are implemented, tested and documented today as incubating 0.x modules — the Runtime stays the production product, no PyTorch-replacement claims.</p>
       <div class="grid">
         <a class="card doc-link" href="/CortexJ-site/docs/platform/lab/">
-          <h3>Lab & Notebook <span class="chip-mini">P1</span></h3>
+          <h3>Lab & Notebook</h3>
           <p>JShell sessions, a Jupyter wire-protocol kernel in pure Java, rich display, export to a Maven skeleton — interactive AI without Python.</p>
         </a>
         <a class="card doc-link" href="/CortexJ-site/docs/platform/data/">
-          <h3>Data <span class="chip-mini">P2</span></h3>
+          <h3>Data</h3>
           <p>Typed <code>Frame</code>/<code>Schema</code> with seven adapters (CSV, Parquet, JDBC, Tablesaw, Arrow, JSON, Tribuo) and cross-adapter content fingerprinting.</p>
         </a>
         <a class="card doc-link" href="/CortexJ-site/docs/platform/experiments/">
-          <h3>Experiments <span class="chip-mini">P3</span></h3>
+          <h3>Experiments</h3>
           <p>Every run reproducible by construction: parameters, metrics, artifacts, model revision, dataset hash, seeds and environment captured into a local store.</p>
         </a>
         <a class="card doc-link" href="/CortexJ-site/docs/platform/training/">
@@ -228,11 +228,11 @@ CortexJ platform = CortexJ.<span class="tk-f">builder</span>().<span class="tk-f
           <p>Engine-neutral tensors (CPU/Vector/LibTorch with parity conformance), tape-based gradients verified by differential tests, NN modules.</p>
         </a>
         <a class="card doc-link" href="/CortexJ-site/docs/platform/training/#distributed-training">
-          <h3>Distributed training <span class="chip-mini">P10</span></h3>
-          <p>Data-parallel scale-out over ZeroMQ: collectives, gradient workers and a topology planner; tensor/pipeline parallelism is scoped behind an ADR.</p>
+          <h3>Distributed training</h3>
+          <p>Data-parallel scale-out over ZeroMQ: collectives, gradient workers and a topology planner; tensor/pipeline parallelism is on the roadmap.</p>
         </a>
         <a class="card doc-link" href="/CortexJ-site/docs/platform/">
-          <h3>Research <span class="chip-mini">P11</span></h3>
+          <h3>Research</h3>
           <p>Model and dataset cards with citations, benchmark modules, the north-star reference chain from CSV to a deployable lockfile.</p>
         </a>
       </div>
@@ -256,8 +256,8 @@ CortexJ platform = CortexJ.<span class="tk-f">builder</span>().<span class="tk-f
   <section id="status">
     <div class="container">
       <p class="label">Status</p>
-      <h2 class="section-title">What ships today: P0 · Runtime</h2>
-      <p class="section-sub">No slideware — every claim below is verified locally on JDK 25, including live end-to-end runs against real ONNX and GGUF models (embeddings, generation, lockfiles, bundles). Milestone cards track the shipped Runtime foundation (spec v3.0 P0); the platform tracks beyond it (Lab, Data, Experiments, Training/PEFT, Tensor/Autograd, Research) ship as incubating 0.x modules and are documented under Platform tracks.</p>
+      <h2 class="section-title">What ships today: the Runtime</h2>
+      <p class="section-sub">No slideware — every claim below is verified locally on JDK 25, including live end-to-end runs against real ONNX and GGUF models (embeddings, generation, lockfiles, bundles). The cards below track the shipped Runtime foundation; the platform tracks beyond it (Lab, Data, Experiments, Training/PEFT, Tensor/Autograd, Distributed, Research) ship as incubating 0.x modules and are documented under Platform tracks.</p>
       <div class="stats">
         <div class="stat"><strong>1500+</strong><span>tests · verified live on real models</span></div>
         <div class="stat"><strong>0</strong><span>SpotBugs findings, full reactor</span></div>
@@ -265,16 +265,16 @@ CortexJ platform = CortexJ.<span class="tk-f">builder</span>().<span class="tk-f
         <div class="stat"><strong>5</strong><span>LTS starters, Java 8 to 25</span></div>
       </div>
       <div class="grid">
-        <div class="card"><h3>M0 · Architecture skeleton</h3><p>API, SPI and module boundaries — the enforced layering the platform is built on.</p></div>
-        <div class="card"><h3>M1 · Resolution & cache</h3><p>Model resolution — local, Hugging Face, HTTP — checksum-safe cache, immutable revisions.</p></div>
-        <div class="card"><h3>M2 · Runtime SPI & core</h3><p>ServiceLoader runtime registry, core platform bootstrap, OpenAI-compatible remote provider.</p></div>
-        <div class="card"><h3>M3 · Real llama.cpp execution</h3><p>Managed llama-server bridge: health polling, blocking + SSE streaming, graceful shutdown.</p></div>
-        <div class="card"><h3>M4 · Explainable planner</h3><p>Candidates, hard constraints, scoring, memory estimates — explainable deterministic plans.</p></div>
-        <div class="card"><h3>M5 · Java 8 → 25</h3><p>Platform modules for every LTS line, starters with wrong-JVM detection.</p></div>
-        <div class="card"><h3>M6 · Legacy verified</h3><p>The full shared core builds and tests green on real JDK 8 and JDK 11 — no reduced feature set.</p></div>
-        <div class="card"><h3>M7 · Production</h3><p>Lockfiles, air-gap bundles, OpenTelemetry, Spring AI and LangChain4j adapters.</p></div>
-        <div class="card"><h3>M8 · Extended runtimes</h3><p>DJL provider with an honest engine probe; the remote provider covers vendor endpoints.</p></div>
-        <div class="card"><h3>M9 · Converters & declarative</h3><p>Deterministic GGUF/Safetensors converters, provenance manifests, declarative @ModelPrompt API.</p></div>
+        <div class="card"><h3>Architecture skeleton</h3><p>API, SPI and module boundaries — the enforced layering the platform is built on.</p></div>
+        <div class="card"><h3>Resolution & cache</h3><p>Model resolution — local, Hugging Face, HTTP — checksum-safe cache, immutable revisions.</p></div>
+        <div class="card"><h3>Runtime SPI & core</h3><p>ServiceLoader runtime registry, core platform bootstrap, OpenAI-compatible remote provider.</p></div>
+        <div class="card"><h3>Real llama.cpp execution</h3><p>Managed llama-server bridge: health polling, blocking + SSE streaming, graceful shutdown.</p></div>
+        <div class="card"><h3>Explainable planner</h3><p>Candidates, hard constraints, scoring, memory estimates — explainable deterministic plans.</p></div>
+        <div class="card"><h3>Java 8 → 25</h3><p>Platform modules for every LTS line, starters with wrong-JVM detection.</p></div>
+        <div class="card"><h3>Legacy verified</h3><p>The full shared core builds and tests green on real JDK 8 and JDK 11 — no reduced feature set.</p></div>
+        <div class="card"><h3>Production</h3><p>Lockfiles, air-gap bundles, OpenTelemetry, Spring AI and LangChain4j adapters.</p></div>
+        <div class="card"><h3>Extended runtimes</h3><p>DJL provider with an honest engine probe; the remote provider covers vendor endpoints.</p></div>
+        <div class="card"><h3>Converters & declarative</h3><p>Deterministic GGUF/Safetensors converters, provenance manifests, declarative @ModelPrompt API.</p></div>
       </div>
       <span class="status">0.1.0-SNAPSHOT · Maven Central release coming</span>
     </div>

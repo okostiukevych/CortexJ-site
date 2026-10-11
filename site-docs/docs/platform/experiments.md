@@ -1,6 +1,6 @@
 # Experiments
 
-The Experiments track (spec P3) makes every run reproducible by construction:
+The Experiments track makes every run reproducible by construction:
 parameters, metrics, artifacts, model revision, dataset hash, seeds, JDK and
 hardware are captured into a local store with embedded provenance. Modules:
 `cortexj-experiments-api` (contract) + `cortexj-experiments-local` (filesystem

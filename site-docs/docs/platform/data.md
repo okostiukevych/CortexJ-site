@@ -31,6 +31,10 @@ System.out.println(frame.schema().names());    // [id, stars, text]
 The same logical data read through any adapter produces an identical typed frame
 — adapters are interchangeable at the `Frame` boundary.
 
+![Live output: typed table, ASCII chart of p99 latencies, dataset fingerprint, interactive JShell results](../img/screenshot-data-lab.png)
+
+*Live output: `Displayable.table`, `Displayable.chart`, `Fingerprint`, a `LabSession` snippet — captured from a real run.*
+
 ## Fingerprinting — the dataset identity
 
 ```java

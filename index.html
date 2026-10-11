@@ -34,6 +34,7 @@
       <a href="#why">Why</a>
       <a href="#how">How it works</a>
       <a href="#runtimes">Runtimes</a>
+      <a href="#platform">Platform</a>
       <a href="#who">Who it's for</a>
       <a href="/CortexJ-site/docs/">Docs</a>
     </nav>
@@ -156,8 +157,47 @@ CortexJ platform = CortexJ.<span class="tk-f">builder</span>().<span class="tk-f
             <span class="chip">GGUF & Safetensors converters</span>
             <span class="chip">Declarative @ModelPrompt API</span>
             <span class="chip">TCK for provider authors</span>
+            <span class="chip">Lab & Jupyter kernel</span>
+            <span class="chip">Data frames & fingerprinting</span>
+            <span class="chip">Experiments store</span>
+            <span class="chip">LoRA / PEFT & safetensors</span>
+            <span class="chip">Tensor + autograd</span>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="platform">
+    <div class="container">
+      <p class="label">Beyond inference</p>
+      <h2 class="section-title">The platform tracks are shipped</h2>
+      <p class="section-sub">Spec v3.0 defines the long-term platform. The tracks below are implemented, tested and documented today as incubating 0.x modules — the Runtime stays the production product, no PyTorch-replacement claims.</p>
+      <div class="grid">
+        <a class="card doc-link" href="/CortexJ-site/docs/platform/lab/">
+          <h3>Lab & Notebook <span class="chip-mini">P1</span></h3>
+          <p>JShell sessions, a Jupyter wire-protocol kernel in pure Java, rich display, export to a Maven skeleton — interactive AI without Python.</p>
+        </a>
+        <a class="card doc-link" href="/CortexJ-site/docs/platform/data/">
+          <h3>Data <span class="chip-mini">P2</span></h3>
+          <p>Typed <code>Frame</code>/<code>Schema</code> with seven adapters (CSV, Parquet, JDBC, Tablesaw, Arrow, JSON, Tribuo) and cross-adapter content fingerprinting.</p>
+        </a>
+        <a class="card doc-link" href="/CortexJ-site/docs/platform/experiments/">
+          <h3>Experiments <span class="chip-mini">P3</span></h3>
+          <p>Every run reproducible by construction: parameters, metrics, artifacts, model revision, dataset hash, seeds and environment captured into a local store.</p>
+        </a>
+        <a class="card doc-link" href="/CortexJ-site/docs/platform/training/">
+          <h3>Training & PEFT <span class="chip-mini">P4–P6</span></h3>
+          <p>Unified Trainer API over pluggable backends, LoRA with merge math, standard safetensors interop, multi-node data-parallel training.</p>
+        </a>
+        <a class="card doc-link" href="/CortexJ-site/docs/platform/tensor/">
+          <h3>Tensor & Autograd <span class="chip-mini">P7–P9</span></h3>
+          <p>Engine-neutral tensors (CPU/Vector/LibTorch with parity conformance), tape-based gradients verified by differential tests, NN modules.</p>
+        </a>
+        <a class="card doc-link" href="/CortexJ-site/docs/platform/">
+          <h3>Research <span class="chip-mini">P11</span></h3>
+          <p>Model and dataset cards with citations, benchmark modules, the north-star reference chain from CSV to a deployable lockfile.</p>
+        </a>
       </div>
     </div>
   </section>
@@ -270,6 +310,10 @@ CortexJ platform = CortexJ.<span class="tk-f">builder</span>().<span class="tk-f
         <details class="faq-item">
           <summary>How is this different from Spring AI or LangChain4j?</summary>
           <p>Those are application frameworks; CortexJ is the runtime layer underneath. It resolves models, plans execution and manages runtimes — and ships adapters that expose CortexJ models as Spring AI / LangChain4j <code>ChatModel</code>, <code>StreamingChatModel</code> and <code>EmbeddingModel</code> implementations, so your framework-side code stays unchanged.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Is this only an inference runtime?</summary>
+          <p>CortexJ Runtime (inference) is the production product — but the platform tracks around it are shipped as incubating modules: interactive <a href="/CortexJ-site/docs/platform/lab/">Lab</a>, typed <a href="/CortexJ-site/docs/platform/data/">Data frames</a>, reproducible <a href="/CortexJ-site/docs/platform/experiments/">Experiments</a>, <a href="/CortexJ-site/docs/platform/training/">Training with LoRA</a> and a <a href="/CortexJ-site/docs/platform/tensor/">Tensor/Autograd stack</a>. The Runtime never depends on them; they feed into it.</p>
         </details>
         <details class="faq-item">
           <summary>When will it be on Maven Central?</summary>

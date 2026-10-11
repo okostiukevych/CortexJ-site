@@ -451,3 +451,9 @@ footer { border-top: 1px solid var(--line); padding: 0; }
   .footer-inner { gap: 28px; }
   .faq { max-width: none; }
 }
+
+
+/* platform track chips on landing cards */
+.chip-mini{display:inline-block;font-size:.62em;font-weight:600;letter-spacing:.04em;color:var(--accent,#b45309);background:rgba(180,83,9,.08);border-radius:999px;padding:.15em .6em;margin-left:.4em;vertical-align:middle}
+a.card{text-decoration:none;color:inherit;display:block;transition:transform .15s ease,box-shadow .15s ease}
+a.card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.08)}

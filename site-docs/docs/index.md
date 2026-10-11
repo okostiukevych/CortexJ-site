@@ -29,6 +29,9 @@ chosen execution path was selected.
 - **Integrations** — Spring AI, LangChain4j and OpenTelemetry adapters.
 - **Production-ready** — model lockfiles, verified air-gap bundles, offline
     deployment, trust policies and observability metrics.
+- **The platform around it** — Lab/Notebook, Data, Experiments, Training/PEFT,
+    Tensor/Autograd and Research tracks ship as incubating modules (see
+    [Platform tracks](platform/index.md)).
 
 ## Where to go next
 
@@ -39,4 +42,5 @@ chosen execution path was selected.
 
 If you operate models rather than write Java, start with the
 [CLI reference](cli.md) — `doctor`, `plan`, `pull` and `run` cover the whole
-lifecycle without an IDE.
+lifecycle without an IDE. Experimenting beyond inference? The
+[platform tracks](platform/index.md) cover the interactive and training stack.

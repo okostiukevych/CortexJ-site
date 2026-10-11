@@ -32,6 +32,17 @@ provider registration order never decides. Rejections are always reported with a
 `PlanReason` — for example `FORMAT_UNSUPPORTED` for a GGUF-only model on the ONNX
 runtime.
 
+### Probe health
+
+A runtime that probes `AVAILABLE` beats an otherwise identical `DEGRADED` one (a
+dead remote endpoint, a thinning native install score −2.0). The degraded candidate
+stays viable as a fallback and remains explicitly selectable — `--runtime` still
+forces it, and `--prefer-runtime` (+3.0) overrides the penalty. When the selected
+winner is itself degraded, the plan says so with a warning naming the probe
+message; when no candidate is viable, the failure carries the runtime health lines
+(`runtimeHealth`) and prefers the actionable infrastructure cause (unavailable /
+misconfigured / memory) over whichever format mismatch happened to sort first.
+
 ## Explanations
 
 Every plan states why it is what it is: the chosen runtime and device, the memory
@@ -42,7 +53,10 @@ are no mystery paths.
 
 If the first choice cannot run — a missing `llama-server`, an oversized artifact, a
 dead remote — the planner walks the fallback chain and reports every step. Fallback
-is never hidden.
+is never hidden, and no error is lost: when every candidate fails, the first
+(root-cause) failure is thrown as the primary error and every later candidate's
+failure is attached as a suppressed exception — a dead local runtime no longer
+hides behind a remote's 404.
 
 ## Quality profiles
 

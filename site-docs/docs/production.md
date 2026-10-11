@@ -12,7 +12,7 @@ Three levels of deployment isolation:
 ## Offline mode
 
 ```java
-CortexJ platform = CortexJ.builder().offline(true).build();
+CortexJ platform = CortexJ.builder().offlineMode(true).build();
 ```
 
 or
@@ -38,10 +38,18 @@ The bundle directory contains:
 - `cortexj-model.json` — the manifest: schema version, model id, resolved
     immutable revision, architecture, license, tasks, and per-artifact entries
     with **computed sha256** and size;
-- all model artifacts (weights plus tokenizer/config files when published);
+- all model artifacts (weights plus tokenizer/config files when published),
+    keeping the repository-relative hierarchy — same-named files in different
+    directories no longer collide, and tokenizer copies are staged next to
+    weights so bundled embedding models run offline out of the box;
 - checksums for every file.
 
 Artifacts are re-used from the platform cache when present (`~/.cortexj/cache`).
+HTTP sources are followed through 302/307 redirects — every hop passes the SSRF
+guard and credentials are stripped cross-origin (Hugging Face `/resolve/` URLs
+redirect to a CDN), and the platform egress proxy is honored. `bundle create`
+is atomic: it stages into a temp directory and publishes only on success, so a
+failed run never leaves a half-written bundle behind.
 
 Verify before deployment:
 
@@ -117,8 +125,9 @@ repository always does; Hugging Face marks community models.
 - In-use artifacts are **pinned** for the model lifetime: the cache never evicts a
     file a live runtime is using; the pin is released when the last handle closes.
 - Downloads back off exponentially between retries, honor `Retry-After`, and keep
-    the resume partial on transient failures (401/403/404 fail fast; only 416 wipes
-    the partial).
+    the resume partial on transient failures (401/403/404 fail fast; a stale-partial
+    416 retries transparently in-loop). The completed partial is moved (not copied)
+    into the cache, so peak disk stays ~1x the artifact instead of ~2x.
 
 ## Credentials and privacy
 
@@ -247,7 +256,12 @@ generations on a bounded pool with a ceiling:
     roles and oversized batches fail with typed 400s;
 - a stuck unary generation answers 504 after
     `cortexj.server.generateTimeoutMillis` (default 30 min);
-- saturation (streams or unary) answers 503 with `Retry-After`;
+- saturation (streams or unary) answers 503 with `Retry-After`; the pool
+    widths and queue bounds are tunable (`cortexj.server.workers`,
+    `cortexj.server.maxQueuedRequests`, `cortexj.server.streamWorkers`);
+- `stop()` drains instead of dropping: the HTTP server stops with a grace
+    period and the pools shut down orderly (`cortexj.server.stopGraceSeconds`,
+    default 5) — restarting does not sever mid-stream responses;
 - bearer failures are throttled per IP (5 per 60 s → 60 s block, 429);
 - non-loopback binds require plaintext-HTTP awareness: terminate TLS at a
     reverse proxy, the server itself speaks plain HTTP.
@@ -256,7 +270,11 @@ generations on a bounded pool with a ceiling:
 
 Platform events flow to OpenTelemetry through `cortexj-observability` —
 `PLAN_CREATED`, `DOWNLOAD_COMPLETED`, `INFERENCE_COMPLETED`, first-token latency and
-queue wait (see [Integrations](integrations.md#opentelemetry)).
+queue wait (see [Integrations](integrations.md#opentelemetry)). Metric points keep
+**low-cardinality attributes only** (event type, level, runtime) — model, artifact
+and exact byte counts ride spans and measurements instead, so a fleet of distinct
+models cannot explode the metric series count. In-flight span tracking is bounded
+with a stale-span sweep, so orphaned loads cannot leak map entries.
 
 ## GraalVM / native image
 

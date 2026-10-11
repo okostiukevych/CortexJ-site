@@ -129,5 +129,8 @@ histogram:
 - `DOWNLOAD_COMPLETED`
 - `INFERENCE_COMPLETED`
 
-plus first-token latency and queue wait. Events carry metadata only — no prompt or
-response content (see [Configuration](concepts/configuration.md#tokens-and-credentials)).
+plus first-token latency and queue wait. Metric points carry low-cardinality
+attributes only (event type, level, runtime) — model, artifact and exact byte
+counts ride spans and measurements instead, so many distinct models cannot explode
+the metric series count. Events carry no prompt or response content (see
+[Configuration](concepts/configuration.md#tokens-and-credentials)).

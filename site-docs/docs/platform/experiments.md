@@ -35,6 +35,10 @@ try-with-resources.
 | seeds | the seed passed to `start()` |
 | environment | JDK, JVM vendor, OS/arch, cores, CortexJ version, wall-clock — captured at `start()` |
 
+![Live output: a captured run with metrics, dataset fingerprint provenance, seed and on-disk layout](../img/screenshot-experiments.png)
+
+*Live output: a captured `latency-baseline` run — metrics, dataset fingerprint, seed and the on-disk layout.*
+
 ## On disk
 
 ```

@@ -20,6 +20,10 @@ failure (3 = model not executable, 2 = operational failure).
 | `runtimes` | List registered runtimes: id, version, tasks, formats, devices |
 | `hardware` | Print the hardware profile + detection notes |
 
+![Live output: cortexj doctor probing environment, hardware and runtime health](img/screenshot-doctor.png)
+
+*`cortexj doctor` on a real machine: environment, platform module, hardware, and honest per-runtime probe results.*
+
 ## Models and plans
 
 | Command | What it does |

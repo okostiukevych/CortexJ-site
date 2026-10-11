@@ -7,7 +7,7 @@ Every verified setting in one table. Priority chain:
 
 | Setting | System property | Environment | Builder | Notes |
 |---|---|---|---|---|
-| Offline mode | `cortexj.offline=true` | `CORTEXJ_OFFLINE=1` | `.offline(true)` | Uncached + offline fails with `CORTEXJ-MODEL-1003`; remote candidates excluded |
+| Offline mode | `cortexj.offline=true` | `CORTEXJ_OFFLINE=1` | `.offlineMode(true)` | Uncached + offline fails with `CORTEXJ-MODEL-1003`; remote candidates excluded |
 | Remote base URL | `cortexj.remote.base.url` | `CORTEXJ_REMOTE_BASE_URL` | — | OpenAI-compatible endpoints (vLLM, llama-server, gateways) |
 | Remote API key | `cortexj.remote.api.key` (warns: sysprops surface in `jcmd`/dumps) | `CORTEXJ_REMOTE_API_KEY` | `.remoteApiKey(...)` | Sealed delivery: only the built-in `openai-remote` runtime receives it, never logged |
 | Hugging Face token | `cortexj.hf.token` (warns, prefer env) | `CORTEXJ_HF_TOKEN` (also `HF_TOKEN`) | `.tokenSupplier(...)` | Never logged |
@@ -38,6 +38,12 @@ Every verified setting in one table. Priority chain:
 | Proxy | `cortexj.proxy.host`, `cortexj.proxy.port` | `CORTEXJ_PROXY_HOST`, `CORTEXJ_PROXY_PORT` | — | HTTP proxy for downloads and remote runtimes |
 | Worker classpath / java | `cortexj.worker.classpath`, `cortexj.worker.java` | — | — | Overrides for the isolated-worker child spawn (defaults: `java.class.path` + `java.home`) |
 | Worker request timeout | `cortexj.worker.request.timeout.millis` | — | — | Blocking request ceiling for the isolated worker channel (default 5 min) |
+| Worker op pool | `cortexj.worker.opThreads` | — | — | Child-JVM operation pool width for the isolated worker (default max(4, min(16, NCPU))); serializing everything onto 2–4 threads was removed |
+| Embedding caps | `cortexj.embed.maxTexts`, `cortexj.embed.maxCharsPerText` | `CORTEXJ_EMBED_MAX_TEXTS`, `CORTEXJ_EMBED_MAX_CHARS_PER_TEXT` | — | Per-call embedding bounds (default 4096 texts, 1,000,000 chars/text); oversized calls fail typed instead of risking an OOM |
+| IO executor width | `cortexj.io.width` | — | — | Bounded admission for the Java 21/25 virtual-thread I/O executor (default max(8, 2×NCPU)); submitters beyond the width park (backpressure) instead of an unbounded virtual-thread stampede |
+| Server workers | `cortexj.server.workers` | — | — | Unary request pool + admission width (default max(8, 2×NCPU)) |
+| Server queue bound | `cortexj.server.maxQueuedRequests` | — | — | Request queue depth (default max(64, workers)) |
+| Server stop grace | `cortexj.server.stopGraceSeconds` | — | — | Graceful drain on `stop()` — HTTP grace + orderly executor shutdown (default 5); no severed mid-stream responses on restart |
 
 ## Locations
 

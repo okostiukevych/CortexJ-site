@@ -70,9 +70,13 @@ The cache lives in `~/.cortexj/cache`; pinned entries are protected from evictio
 # deterministic GGUF F32 -> F16 conversion
 java -jar cli/target/cortexj-cli-*.jar convert ./model.gguf --to f16 --out ./converted
 
-# embedded OpenAI-compatible server
-java -jar cli/target/cortexj-cli-*.jar server
+# embedded OpenAI-compatible server (one loaded model)
+java -jar cli/target/cortexj-cli-*.jar server ./model.gguf --port 8080 [--bind 0.0.0.0] [--auth <token>]
 ```
+
+`server` binds loopback by default, serves `/v1/models`, `/v1/chat/completions`
+(blocking + SSE stream) and `/v1/embeddings`, drains gracefully on Ctrl+C. See
+[Production](production.md#embedded-server) for capacity and hardening knobs.
 
 See [Converters](converters.md) for provenance guarantees and
 [Capabilities](concepts/capabilities.md) for the streaming contract the server uses.

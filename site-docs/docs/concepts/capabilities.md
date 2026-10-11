@@ -38,6 +38,12 @@ Mean pooling over the token dimension is applied automatically; tokenization goe
 through the shared `HfTokenizer` (WordPiece, byte-level BPE, Unigram, whitespace
 fallback).
 
+!!! note "Request caps"
+    Embedding calls are bounded: up to 4096 texts and 1,000,000 characters per
+    text (override `cortexj.embed.maxTexts` / `cortexj.embed.maxCharsPerText` or
+    the `CORTEXJ_EMBED_*` environment variables). An oversized call fails with a
+    typed error naming the cap — split the input instead of risking an OOM.
+
 ## Streaming
 
 CortexJ defines its own `TokenStream` contract on the Java 8 baseline, so streaming

@@ -36,6 +36,14 @@ The shared `HfTokenizer` reads `tokenizer.json` next to the model and supports
 WordPiece (BERT-style, with CLS/SEP wrapping), byte-level BPE (GPT-style), Unigram, and
 a whitespace fallback when `tokenizer.json` is missing or unreadable.
 
+The platform **auto-stages** the resolved `tokenizer.json` next to the cached
+weight on every load (self-healing after eviction). A sidecar that declares a
+checksum is verified — a mismatch fails the load instead of silently degrading
+into the hash fallback. When no sidecar is available, the model handle carries a
+`degradedTokenizerNote` naming the cause, so an inference-time tokenizer problem
+traces back to the load-time warning. Tokenizer vocab ids are validated at load
+(out-of-range ids fail the tokenizer, not every inference).
+
 Requirements: the model needs an `input_ids` (or equivalently named) int64 input. Mean
 pooling over the token dimension is applied automatically.
 
@@ -114,7 +122,10 @@ The provider (module `cortexj-runtime-isolated`) spawns
 `io.cortexj.worker.WorkerHost` (`cortexj-worker`) lazily, verifies the handshake,
 and translates probe/open/load/execute/stream across the pipe. A dead child surfaces
 as typed errors and respawns on the next probe; no orphaned processes (destroy
-ladder), and cancellation propagates to the child generation. See
+ladder), and cancellation propagates to the child generation — cancellation wins
+the race against a concurrently completing stream, so a cancelled subscriber never
+receives a late terminal. The child's operation pool widens with the CPU
+(`max(4, min(16, NCPU))`, override `cortexj.worker.opThreads`). See
 [Production](../production.md#isolated-native-worker) and `docs/isolated-worker.md`
 in the repository.
 

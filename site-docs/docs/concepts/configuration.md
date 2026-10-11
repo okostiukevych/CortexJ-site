@@ -13,7 +13,7 @@ The full settings table lives in the
 
 ```java
 CortexJ platform = CortexJ.builder()
-        .offline(true)
+        .offlineMode(true)
         .allowRemoteRuntime(true)
         .trustPolicy(TrustPolicy.TRUSTED_ONLY)
         .executionPolicy(new PrivacyPolicy())
@@ -30,7 +30,7 @@ uncontrolled threads.
 Three ways to say the same thing:
 
 ```java
-CortexJ platform = CortexJ.builder().offline(true).build();
+CortexJ platform = CortexJ.builder().offlineMode(true).build();
 ```
 
 ```bash

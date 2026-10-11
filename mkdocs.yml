@@ -31,6 +31,8 @@ nav:
       - Tensor & Autograd: docs/platform/tensor.md
   - Reference:
       - Configuration properties: docs/reference/configuration-properties.md
+      - Runtime options: docs/reference/runtime-options.md
+      - Error codes: docs/reference/error-codes.md
       - API stability: docs/reference/api-stability.md
 theme:
   name: material

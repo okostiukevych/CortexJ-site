@@ -92,6 +92,16 @@ CortexJ platform = CortexJ.<span class="tk-f">builder</span>().<span class="tk-f
           <h3>Explainable decisions</h3>
           <p>Every plan reports why: hard constraints considered, scores, memory estimates. No mystery paths, no provider-order luck.</p>
         </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 4v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V7l7-4z"/><path d="M9.5 12l1.8 1.8 3.4-3.6"/></svg></div>
+          <h3>Production-grade, not demo-grade</h3>
+          <p>Lockfiles for reproducible plans, verified air-gap bundles, trust policies, checksum-verified downloads, typed errors with remediation. Built for audits, not demos.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9l3 3-3 3M13 15h4"/></svg></div>
+          <h3>Manage it without an IDE</h3>
+          <p>A CLI covers the whole lifecycle: <code>doctor</code> checks the machine, <code>plan</code> predicts, <code>pull</code> downloads, <code>run</code> executes, <code>server</code> exposes an OpenAI-compatible API.</p>
+        </div>
       </div>
       <div class="compare-wrap">
         <table class="compare">
@@ -127,6 +137,29 @@ CortexJ platform = CortexJ.<span class="tk-f">builder</span>().<span class="tk-f
         <div class="how-item"><span class="num">01</span><h3>Plan before execution</h3><p>Ask what will happen — <code>cortexj plan</code> — before downloading or running anything.</p></div>
         <div class="how-item"><span class="num">02</span><h3>Deterministic by construction</h3><p>Hard constraints first, then scoring with defined tie-breaks. Provider order never decides.</p></div>
         <div class="how-item"><span class="num">03</span><h3>Graceful fallback</h3><p>When the first choice can't run, the planner walks the fallback chain — and tells you.</p></div>
+      </div>
+      <p class="label" style="margin-top:2.5rem">What's inside</p>
+      <div class="chip-groups">
+        <div>
+          <p class="chip-group-title">Core (Java 8)</p>
+          <div class="chips">
+            <span class="chip"><b>api</b> — one public contract</span>
+            <span class="chip"><b>planner</b> — deterministic decisions</span>
+            <span class="chip"><b>cache</b> — checksum-safe artifact store</span>
+            <span class="chip"><b>repositories</b> — local · Hugging Face · HTTP</span>
+            <span class="chip"><b>lockfiles & bundles</b> — reproducible deployments</span>
+          </div>
+        </div>
+        <div>
+          <p class="chip-group-title">Execution & ops</p>
+          <div class="chips">
+            <span class="chip"><b>runtimes</b> — onnx · llamacpp · remote · isolated worker</span>
+            <span class="chip"><b>server</b> — OpenAI-compatible endpoint</span>
+            <span class="chip"><b>observability</b> — OpenTelemetry metrics & spans</span>
+            <span class="chip"><b>converters</b> — GGUF F32↔F16, Safetensors→GGUF</span>
+            <span class="chip"><b>cli</b> — the whole lifecycle without an IDE</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>

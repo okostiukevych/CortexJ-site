@@ -12,7 +12,7 @@ hardware is available, whether memory suffices, what the fallback is — and *wh
 chosen execution path was selected.
 
 !!! note "Status"
-    CortexJ is `0.1.0-SNAPSHOT` and not yet on Maven Central. The documentation
+    CortexJ is `1.0.0-RC1` and not yet on Maven Central. The documentation
     describes the working platform as it exists today.
 
 ## Why CortexJ

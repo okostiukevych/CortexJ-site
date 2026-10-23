@@ -20,7 +20,7 @@ an actionable diagnostic, and the business code stays identical across all five.
         <dependency>
             <groupId>io.cortexj</groupId>
             <artifactId>cortexj-bom</artifactId>
-            <version>0.1.0-SNAPSHOT</version>
+            <version>1.0.0-RC1</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
@@ -69,7 +69,7 @@ The shaded `cortexj-cli` jar runs unchanged on Java 8 through 25 and reports the
 detected JVM:
 
 ```bash
-java -jar cortexj-cli-0.1.0-SNAPSHOT.jar doctor
+java -jar cortexj-cli-1.0.0-RC1.jar doctor
 ```
 
 See the [CLI reference](cli.md) for the full command set.

@@ -17,7 +17,7 @@ the direct API stays the source of truth.
 <dependency>
     <groupId>io.cortexj</groupId>
     <artifactId>cortexj-spring-ai</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>1.0.0-RC1</version>
 </dependency>
 ```
 
@@ -79,7 +79,7 @@ is documented on its own page: [Tool calling](tool-calling.md).
 <dependency>
     <groupId>io.cortexj</groupId>
     <artifactId>cortexj-spring-boot-starter</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>1.0.0-RC1</version>
 </dependency>
 ```
 
@@ -135,7 +135,7 @@ Honest boundaries:
 <dependency>
     <groupId>io.cortexj</groupId>
     <artifactId>cortexj-langchain4j</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>1.0.0-RC1</version>
 </dependency>
 ```
 

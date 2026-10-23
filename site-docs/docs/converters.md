@@ -48,4 +48,4 @@ The safetensors converter re-containerizes Safetensors checkpoints into GGUF:
 ## Next steps
 
 - [The execution planner](concepts/planner.md) — how conversion steps enter a plan.
-- [CLI reference](cli.md#conversion-and-serving) — the `convert` command.
+- [CLI reference](cli.md#conversion) — the `convert` command.

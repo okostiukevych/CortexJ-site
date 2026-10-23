@@ -2,7 +2,8 @@
 
 Runtimes are plugins, discovered via `ServiceLoader` and described by declarative
 descriptors. The planner decides from descriptors and policies — never from provider
-order. Four runtimes ship today; the SPI is public and
+order. Four runtimes are auto-discovered on the classpath; `isolated` is opt-in and
+`jinfer` is an optional Java 25+ provider. The SPI is public and
 [documented for your own](../providers.md#runtime-provider-spi).
 
 ## Built-in runtimes at a glance
@@ -13,6 +14,8 @@ order. Four runtimes ship today; the SPI is public and
 | `llamacpp` | GGUF | CPU / GPU | TEXT_GENERATION | yes (SSE) |
 | `openai-remote` | OpenAI-compatible API | REMOTE | TEXT_GENERATION | yes (SSE) |
 | `djl` | engine-dependent (honest probe) | engine-dependent | EMBEDDING (with artifacts) | engine-dependent |
+| `isolated` | wraps another runtime | same as wrapped | same as wrapped | same as wrapped |
+| `jinfer` | JInfer model container (GGUF loading) | CPU | TEXT_GENERATION, EMBEDDING, RERANKING | yes |
 
 ## ONNX Runtime
 

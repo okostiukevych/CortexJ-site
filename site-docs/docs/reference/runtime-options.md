@@ -48,7 +48,7 @@ sees them.
 No user-facing options today — the providers derive everything (auxiliary
 inputs, tokenizer) from the model directory. Embedding request caps are
 platform-level, not runtime options: see
-[capabilities](../concepts/capabilities.md#request-caps).
+[capabilities](../concepts/capabilities.md#embeddings).
 
 ## Related pages
 

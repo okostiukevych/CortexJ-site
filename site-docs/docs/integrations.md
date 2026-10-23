@@ -5,8 +5,13 @@ the direct API stays the source of truth.
 
 ## Spring AI
 
-`cortexj-spring-ai` exposes a loaded CortexJ model as a Spring AI 1.0.7 `ChatModel`,
+`cortexj-spring-ai` exposes a loaded CortexJ model as a Spring AI 2.0.1 `ChatModel`,
 `StreamingChatModel` and `EmbeddingModel`. Requires Java 17+.
+
+!!! note "Version floor"
+    The adapter fails fast at construction on Spring AI 1.x classpaths with
+    `CORTEXJ-CONF-0003` and the required minimum version — 1.x is end-of-life and
+    receives no fixes.
 
 ```xml
 <dependency>
@@ -61,9 +66,69 @@ ONNX/llama.cpp locally, `openai-remote` when `cortexj.remote.base.url` is config
 Use `CortexJ.builder().allowRemoteRuntime(true)` plus environment variables to target
 vLLM / llama-server / gateways.
 
+Tool calling through the adapter (Spring runs the loop, CortexJ carries the calls)
+is documented on its own page: [Tool calling](tool-calling.md).
+
+## Spring Boot starter
+
+`cortexj-spring-boot-starter` auto-configures the platform and an auto-wired
+`ChatModel` from `cortexj.*` properties. Requires Java 17+ and Spring Boot 4.x
+(the Framework 7 generation the Spring AI 2.x adapter targets).
+
+```xml
+<dependency>
+    <groupId>io.cortexj</groupId>
+    <artifactId>cortexj-spring-boot-starter</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+</dependency>
+```
+
+```yaml
+cortexj:
+  model: Qwen/Qwen3-8B            # wires a ChatModel bean
+  offline: false
+  allow-remote-runtime: true
+  trust-policy: ALLOW_UNSIGNED_WITH_WARNING
+  remote:
+    base-url: https://my-endpoint/v1
+    api-key: sk-...
+```
+
+Inject and call — no wiring code:
+
+```java
+@Service
+class AnswerService {
+    private final ChatModel model;
+
+    AnswerService(ChatModel model) { this.model = model; }
+
+    String answer(String prompt) {
+        return model.call(new Prompt(prompt)).getResult().getOutput().getText();
+    }
+}
+```
+
+Available properties (all optional, defaults mirror the direct builder):
+`model`, `offline`, `allow-remote-runtime`, `working-directory`, `trust-policy`,
+`memory-limit`, `max-artifact-bytes`, `shutdown-hook`, and `remote.base-url` /
+`remote.api-key` / `remote.model-prefix`. The starter binds Spring's relaxed
+names (`base-url`, `baseUrl`, `BASE_URL` all work); the dot-style properties on
+the configuration-properties page (`cortexj.remote.base.url`) are the
+direct-builder system-property surface.
+
+Honest boundaries:
+
+- Every bean is `@ConditionalOnMissingBean`: defining your own `CortexJ` platform
+  or `ChatModel` disables the auto-configured one — the starter never fights your
+  configuration.
+- An unresolvable `cortexj.model` fails application startup with a typed
+  `CORTEXJ-` diagnostic instead of failing on the first call.
+- Proxy settings and event-listener registration stay with the direct builder API.
+
 ## LangChain4j
 
-`cortexj-langchain4j` exposes a loaded CortexJ model as LangChain4j 1.21.x `ChatModel`,
+`cortexj-langchain4j` exposes a loaded CortexJ model as LangChain4j 1.22.x `ChatModel`,
 `StreamingChatModel` and `EmbeddingModel`. Requires Java 17+.
 
 ```xml

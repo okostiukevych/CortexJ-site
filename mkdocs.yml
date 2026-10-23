@@ -18,6 +18,7 @@ nav:
       - Configuration: docs/concepts/configuration.md
   - CLI reference: docs/cli.md
   - Integrations: docs/integrations.md
+  - Tool calling: docs/tool-calling.md
   - Production: docs/production.md
   - Declarative API: docs/declarative.md
   - Converters: docs/converters.md

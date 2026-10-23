@@ -18,7 +18,7 @@ try {
 |---|---|---|
 | `CORTEXJ-CONF-0001` | required bootstrap component missing | add the starter/runtime artifact to the classpath |
 | `CORTEXJ-CONF-0002` | starter/JVM mismatch (e.g. Java 25 starter on Java 8) | use the starter matching the running JVM — the message names it |
-| `CORTEXJ-CONF-0003` | enterprise policy file present but unreadable/corrupt | fix permissions/syntax or remove the file (fail-closed by design) |
+| `CORTEXJ-CONF-0003` | invalid configuration (unreadable/corrupt enterprise policy file, unsupported adapter version, invalid property value) | fix the file/permissions/syntax, or replace the adapter with a supported version — the message names the exact value |
 | `CORTEXJ-CONF-0004` | no I/O executor available | pass `CortexJBuilder.executor(...)` or use the default platform |
 
 ## MODEL — resolution
@@ -85,7 +85,7 @@ try {
 
 | Code | Meaning | Typical fix |
 |---|---|---|
-| `CORTEXJ-INFER-9001` | inference failed | the cause carries the engine error (bad input shape, tokenizer issue, dead endpoint) |
+| `CORTEXJ-INFER-9001` | inference failed (also: malformed tool-call payload from an OpenAI-compatible endpoint) | the cause carries the engine error (bad input shape, tokenizer issue, dead endpoint) or the malformed provider response |
 | `CORTEXJ-INFER-9002` | token streaming failed | check the SSE connection / stream pool saturation (503 surfaces here) |
 | `CORTEXJ-INFER-9003` | inference cancelled (by you or a close) | expected on cancellation — not a defect |
 | `CORTEXJ-INFER-9004` | task unsupported by the loaded model | request a capability the model offers |

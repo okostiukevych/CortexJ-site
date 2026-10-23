@@ -96,7 +96,7 @@ try (ModelHandle model = platform.models().load(
 ```
 
 Mean pooling is automatic; batches are supported up to the
-[request caps](concepts/capabilities.md#request-caps). The platform stages the
+[request caps](concepts/capabilities.md#embeddings). The platform stages the
 model's `tokenizer.json` next to the weights automatically.
 
 ## The same thing via the CLI

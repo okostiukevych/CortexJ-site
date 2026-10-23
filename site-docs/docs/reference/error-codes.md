@@ -18,7 +18,7 @@ try {
 |---|---|---|
 | `CORTEXJ-CONF-0001` | required bootstrap component missing | add the starter/runtime artifact to the classpath |
 | `CORTEXJ-CONF-0002` | starter/JVM mismatch (e.g. Java 25 starter on Java 8) | use the starter matching the running JVM — the message names it |
-| `CORTEXJ-CONF-0003` | invalid configuration (unreadable/corrupt enterprise policy file, unsupported adapter version, invalid property value) | fix the file/permissions/syntax, or replace the adapter with a supported version — the message names the exact value |
+| `CORTEXJ-CONF-0003` | invalid configuration (unreadable/corrupt enterprise policy file, unsupported adapter version, invalid property value, malformed tool schema on a tool-calling request) | fix the file/permissions/syntax, replace the adapter with a supported version, or correct the named tool's `parametersJson` — the message names the exact value |
 | `CORTEXJ-CONF-0004` | no I/O executor available | pass `CortexJBuilder.executor(...)` or use the default platform |
 
 ## MODEL — resolution

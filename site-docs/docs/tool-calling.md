@@ -64,7 +64,10 @@ The `remote-openai` runtime is wire-complete in both directions:
   schema is parsed, never a quoted string); assistant messages render the calls
   proposed in the previous round; tool results render tied to their call by
   `tool_call_id`.
-- **Response**: non-streamed `message.tool_calls` parse into `ToolCall` values.
+- **Response**: non-streamed `message.tool_calls` parse into `ToolCall` values; a
+  call without a function name fails typed naming the malformed entry
+  (`CORTEXJ-INFER-9001`) — a malformed *schema* on the request side fails typed
+  naming the tool (`CORTEXJ-CONF-0003`), never as a provider error.
 - **Streaming**: `delta.tool_calls` fragments accumulate per index (id and name
   arrive once, `function.arguments` is appended verbatim); the assembled calls
   publish before the `tool_calls` terminal.

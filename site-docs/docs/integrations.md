@@ -13,6 +13,10 @@ the direct API stays the source of truth.
     `CORTEXJ-CONF-0003` and the required minimum version — 1.x is end-of-life and
     receives no fixes.
 
+!!! note "Repository"
+    Both dependencies resolve from the [CortexJ Maven repository](installation.md#1-add-the-cortexj-repository)
+    (or from JitPack under `com.github.okostiukevych.CortexJ`).
+
 ```xml
 <dependency>
     <groupId>io.cortexj</groupId>

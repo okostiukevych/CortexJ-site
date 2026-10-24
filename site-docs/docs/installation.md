@@ -12,7 +12,38 @@ an actionable diagnostic, and the business code stays identical across all five.
 - For ONNX embeddings the bundled ONNX Runtime (CPU execution provider) is enough —
     nothing extra to install.
 
-## 1. Add the BOM
+## 1. Add the CortexJ repository
+
+CortexJ artifacts are published to the CortexJ Maven repository (GitHub Pages).
+Until the platform reaches Maven Central the coordinates stay `io.cortexj` — you
+only need the repository block:
+
+```xml
+<repositories>
+    <repository>
+        <id>cortexj</id>
+        <url>https://okostiukevych.github.io/CortexJ-maven/</url>
+    </repository>
+</repositories>
+```
+
+!!! tip "JitPack alternative"
+    The same artifacts are served by JitPack under the `com.github.okostiukevych.CortexJ`
+    group id, with no repository block of your own:
+
+    ```xml
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+    <dependency>
+        <groupId>com.github.okostiukevych.CortexJ</groupId>
+        <artifactId>cortexj-starter-java21</artifactId>
+        <version>1.0.0-RC1</version>
+    </dependency>
+    ```
+
+## 2. Add the BOM
 
 ```xml
 <dependencyManagement>
@@ -28,7 +59,7 @@ an actionable diagnostic, and the business code stays identical across all five.
 </dependencyManagement>
 ```
 
-## 2. Pick your starter
+## 3. Pick your starter
 
 | Starter | JVM |
 |---|---|

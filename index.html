@@ -1,462 +1,403 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CortexJ Runtime — portable AI execution for the JVM</title>
-  <meta name="description" content="One JVM API. Compatible models. The best available runtime. Production AI from Java 8 to Java 25+, without mandatory Python.">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="theme-color" content="#0a0d12">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#090e16">
+  <meta name="description" content="CortexJ Runtime: portable, explainable AI execution for Java 8–25. One JVM API for local and remote models, deterministic runtime planning, and production-ready deployments.">
+  <meta name="author" content="CortexJ">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="CortexJ — one JVM API, any model, the best runtime">
-  <meta property="og:description" content="CortexJ Runtime — portable AI execution for the JVM. Java 8 to Java 25, local and remote runtimes, explainable deterministic plans.">
+  <meta property="og:title" content="CortexJ — AI execution, without the runtime guesswork">
+  <meta property="og:description" content="One JVM API. Compatible models. Explainable runtime planning. Build AI-powered Java applications without hand-wiring model infrastructure.">
   <meta property="og:url" content="https://okostiukevych.github.io/CortexJ-site/">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="CortexJ — one JVM API, any model, the best runtime">
-  <meta name="twitter:description" content="CortexJ Runtime — portable AI execution for the JVM. Java 8 to Java 25, local and remote runtimes, explainable deterministic plans.">
   <meta property="og:image" content="https://okostiukevych.github.io/CortexJ-site/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CortexJ — AI execution, without the runtime guesswork">
+  <meta name="twitter:description" content="Portable, explainable AI execution for the JVM. Java 8–25, local and remote runtimes, deterministic planning.">
   <meta name="twitter:image" content="https://okostiukevych.github.io/CortexJ-site/og-image.png">
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"CortexJ","applicationCategory":"DeveloperApplication","operatingSystem":"Linux, macOS, Windows","description":"CortexJ Runtime — portable AI execution for the JVM. One API, compatible models, the best available runtime — Java 8 to 25.","offers":{"@type":"Offer","price":"0"}}
-  </script>
+  <link rel="canonical" href="https://okostiukevych.github.io/CortexJ-site/">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%237c6ff0'/%3E%3Ctext x='32' y='44' font-family='Arial,sans-serif' font-size='38' font-weight='700' fill='white' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E">
+  <title>CortexJ — Portable AI Runtime for the JVM</title>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"CortexJ Runtime","url":"https://okostiukevych.github.io/CortexJ-site/","applicationCategory":"DeveloperApplication","operatingSystem":"Linux, macOS, Windows","description":"Portable AI runtime orchestration and model execution for Java 8 through Java 25.","license":"https://www.apache.org/licenses/LICENSE-2.0","isAccessibleForFree":true}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#090e16;--bg-deep:#070b11;--bg-soft:#0c121b;--surface:#111924;--surface-up:#151f2b;--stroke:#25313e;--stroke-soft:#1c2733;--text:#f4f5f7;--muted:#a0abba;--dim:#6b7b8a;--amber:#fac36b;--amber-strong:#f4b34f;--cyan:#68d9d0;--green:#8ce6b4;--mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;--display:'Space Grotesk',system-ui,sans-serif;--sans:'DM Sans',system-ui,sans-serif;--max:1240px}
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:96px}
+    body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    ::selection{background:rgba(250,195,107,.3);color:#fff}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit;cursor:pointer}
+    button,a{-webkit-tap-highlight-color:transparent}
+    button:focus-visible,a:focus-visible{outline:2px solid var(--amber);outline-offset:4px}
+    svg{display:block}
+    pre,code{font-family:var(--mono)}
+    .wrap{max-width:var(--max);padding:0 34px;margin:0 auto}
+    .skip-link{position:absolute;top:-100px;left:14px;z-index:100;background:var(--amber);color:#10131a;padding:10px 16px;border-radius:8px}
+    .skip-link:focus{top:12px}
+    .eyebrow{display:flex;align-items:center;gap:12px;font:500 11px/1.5 var(--mono);text-transform:uppercase;letter-spacing:.15em;color:var(--amber)}
+    .eyebrow::before{content:"";display:block;width:22px;height:1px;background:var(--amber)}
+    .section-h{font:600 clamp(34px,4.2vw,56px)/1.12 var(--display);letter-spacing:-.055em;margin:17px 0 18px}
+    .section-lead{font-size:17px;line-height:1.78;color:var(--muted);max-width:670px;margin:0}
+    .section-space{padding:113px 0}
+    .divider{height:1px;background:var(--stroke-soft)}
+    .pill{display:inline-flex;align-items:center;gap:9px;border:1px solid #4d4434;border-radius:100px;background:rgba(250,195,107,.075);font:500 11px/1 var(--mono);letter-spacing:.03em;color:#ffe0a9;padding:10px 13px;white-space:nowrap}
+    .pill-dot,.live-dot{height:7px;width:7px;display:inline-block;border-radius:50%;background:var(--green);box-shadow:0 0 10px rgba(140,230,180,.55);flex:none}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:10px;padding:14px 19px;border:1px solid transparent;font:700 13px/1.2 var(--sans);white-space:nowrap;transition:transform .2s,background .2s,border-color .2s,box-shadow .2s}
+    .btn:hover{transform:translateY(-2px)}
+    .btn-primary{background:var(--amber);color:#11151c;box-shadow:0 7px 32px rgba(250,195,107,.15)}
+    .btn-primary:hover{background:#ffcf86;box-shadow:0 7px 38px rgba(250,195,107,.24)}
+    .btn-secondary{border-color:#354251;background:rgba(255,255,255,.025);color:var(--text)}
+    .btn-secondary:hover{border-color:#778797;background:rgba(255,255,255,.055)}
+    .btn svg{width:16px;height:16px}
+    .link-arrow{display:inline-flex;gap:8px;align-items:center;font-size:13px;font-weight:700;color:var(--amber);transition:gap .15s}
+    .link-arrow:hover{gap:13px}
+    .link-arrow svg{width:15px;height:15px}
+    .site-header{position:sticky;top:0;z-index:50;background:rgba(9,14,22,.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(42,54,66,.75)}
+    .nav-inner{height:77px;display:flex;align-items:center;gap:25px}
+    .wordmark{display:inline-flex;align-items:center;gap:11px;flex:none;font:700 23px/1 var(--display);letter-spacing:-.055em;color:#f8fafc}
+    .brand-mark{width:35px;height:35px;border:1px solid rgba(250,195,107,.42);border-radius:10px;background:linear-gradient(145deg,#26323c,#171e26);display:grid;place-items:center;position:relative;font:700 21px/1 var(--display);letter-spacing:-.12em;color:var(--amber);box-shadow:inset 0 0 13px rgba(250,195,107,.06)}
+    .brand-mark span{transform:translateX(-2px)}
+    .wordmark b{color:var(--amber);font-weight:700}
+    .nav-menu{display:flex;align-items:center;gap:32px;margin-left:auto}
+    .nav-menu a{font-size:13px;font-weight:600;color:#aebac6;transition:color .2s}
+    .nav-menu a:hover{color:#fff}
+    .nav-action{display:flex;gap:10px;align-items:center}
+    .github-icon{width:18px;height:18px;fill:currentColor}
+    .nav-action .btn{padding:12px 17px}
+    .nav-github{display:inline-grid;place-items:center;width:41px;height:41px;border:1px solid var(--stroke);border-radius:10px;color:#e6ecf1;transition:border-color .2s,background .2s}
+    .nav-github:hover{border-color:#627181;background:var(--surface)}
+    .menu-toggle{display:none;width:42px;height:42px;align-items:center;justify-content:center;background:transparent;border:1px solid var(--stroke);color:var(--text);border-radius:9px}
+    .menu-toggle svg{width:19px;height:19px}
+    .hero{position:relative;overflow:hidden;padding:84px 0 102px;isolation:isolate}
+    .hero::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:-2;background:radial-gradient(ellipse 48% 48% at 76% 34%,rgba(41,104,118,.17),transparent 76%),radial-gradient(ellipse 36% 35% at 23% 9%,rgba(165,111,36,.095),transparent 78%)}
+    .hero::after{content:"";position:absolute;inset:-30% -10% 0;pointer-events:none;z-index:-1;opacity:.4;background-image:linear-gradient(rgba(130,164,180,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(130,164,180,.07) 1px,transparent 1px);background-size:55px 55px;mask-image:linear-gradient(to bottom,transparent 0%,#000 40%,transparent 90%)}
+    .hero-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:50px;align-items:center}
+    .hero-left{position:relative;z-index:1;padding-top:15px}
+    .hero h1{font:600 clamp(49px,5.2vw,72px)/1.035 var(--display);letter-spacing:-.066em;margin:27px 0 25px;max-width:650px}
+    .hero h1 .soft{color:#cad3dc}
+    .hero h1 .accent{color:var(--amber)}
+    .hero-desc{font-size:17.5px;line-height:1.8;color:#a4b0bd;max-width:530px;margin:0 0 31px}
+    .hero-ctas{display:flex;gap:11px;flex-wrap:wrap}
+    .hero-footnote{margin:29px 0 0;display:flex;gap:11px;align-items:center;color:#7f8d9b;font:500 11.5px/1.5 var(--mono);flex-wrap:wrap}
+    .hero-footnote span{display:inline-block;height:3px;width:3px;border-radius:50%;background:#71808f}
+    .hero-visual{position:relative;padding:22px;border:1px solid #2b3d4b;background:linear-gradient(152deg,#141f2b 0%,#0c141d 66%,#121821 100%);border-radius:19px;box-shadow:0 38px 90px -35px #000,0 0 85px -65px #70d9c7;min-height:520px;overflow:hidden}
+    .hero-visual::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 53% 45%,rgba(67,192,188,.08),transparent 48%),repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(200,226,230,.026) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(200,226,230,.026) 40px);pointer-events:none}
+    .graph-top{position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:2px 2px 18px;border-bottom:1px solid var(--stroke)}
+    .graph-top .overline{font:500 10px/1.4 var(--mono);letter-spacing:.12em;color:#9aacb9}
+    .graph-id{font:500 10px/1 var(--mono);color:#8295a3}
+    .graph-body{position:relative;padding:23px 0 14px}
+    .graph-label{font:500 10px/1 var(--mono);color:#8193a1;letter-spacing:.13em;text-transform:uppercase;margin-bottom:11px}
+    .graph-input{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 18px;border-radius:10px;background:#0b131d;border:1px solid #334453}
+    .graph-input p{margin:0;color:#e6edf2;font:500 12px/1.5 var(--mono);overflow-wrap:anywhere}
+    .graph-input .graph-file{color:var(--amber)}
+    .input-chip{background:#26323c;border-radius:6px;padding:5px 8px;color:#a7bbc8;font:500 10px/1 var(--mono);white-space:nowrap}
+    .graph-flow{display:grid;grid-template-columns:minmax(0,.93fr) 30px minmax(0,1fr);align-items:center;margin-top:18px;gap:8px;min-height:235px}
+    .plan-core{align-self:stretch;min-height:228px;border-radius:12px;padding:22px 15px 18px;background:linear-gradient(160deg,rgba(250,195,107,.14),rgba(250,195,107,.028) 68%);border:1px solid rgba(250,195,107,.48);position:relative;box-shadow:0 0 40px rgba(250,195,107,.035)}
+    .plan-core::after{content:"";position:absolute;inset:-5px;border:1px solid rgba(250,195,107,.08);border-radius:15px;pointer-events:none}
+    .core-icon{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:rgba(250,195,107,.13);color:var(--amber);margin-bottom:24px}
+    .core-icon svg{width:19px;height:19px}
+    .core-name{font:600 16px/1.18 var(--display);letter-spacing:-.035em}
+    .core-sub{font:400 10.5px/1.5 var(--mono);color:#bca67e;margin-top:5px}
+    .core-steps{display:flex;gap:5px;flex-wrap:wrap;margin-top:20px}
+    .core-steps span{font:500 9px/1 var(--mono);color:#e1c894;border:1px solid rgba(250,195,107,.19);border-radius:5px;padding:7px}
+    .flow-line{height:1px;background:linear-gradient(90deg,var(--amber),var(--cyan));position:relative}
+    .flow-line::after{content:"";position:absolute;right:0;top:50%;transform:translateY(-50%) rotate(45deg);width:7px;height:7px;border-right:1px solid var(--cyan);border-top:1px solid var(--cyan)}
+    .runtime-stack{display:grid;gap:10px}
+    .runtime-item{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:14px 12px;border:1px solid #334753;background:#111d29;border-radius:10px;min-height:64px}
+    .runtime-item.selected{border-color:rgba(104,217,208,.6);background:linear-gradient(90deg,rgba(104,217,208,.1),rgba(104,217,208,.035))}
+    .runtime-item strong{display:block;font:600 12px/1.3 var(--display);letter-spacing:-.02em}
+    .runtime-item span{display:block;font:400 9px/1.55 var(--mono);color:#829aab;margin-top:4px}
+    .runtime-item .runtime-light{width:7px;height:7px;flex:none;border:1px solid #677989;border-radius:50%}
+    .runtime-item.selected .runtime-light{background:var(--cyan);border-color:var(--cyan);box-shadow:0 0 13px rgba(104,217,208,.7)}
+    .graph-result{border:1px solid #29463f;background:rgba(16,44,38,.58);padding:14px 15px;display:flex;align-items:center;gap:13px;border-radius:10px;margin-top:10px}
+    .graph-result svg{width:18px;height:18px;flex:none;color:var(--green)}
+    .graph-result strong{font:600 11px/1.4 var(--mono);color:#d2f8e5;display:block}
+    .graph-result span{font:400 10px/1.4 var(--mono);color:#8fb1a4}
+    .graph-bottom{position:relative;border-top:1px solid var(--stroke);margin-top:20px;padding:15px 2px 0;display:flex;justify-content:space-between;gap:12px;font:400 10px/1.5 var(--mono);color:#8799a7;flex-wrap:wrap}
+    .graph-bottom strong{font-weight:500;color:#b4c6d0}
+    .graph-bottom .point{color:var(--cyan)}
+    .proof-strip{background:#0c131d;border-top:1px solid var(--stroke-soft);border-bottom:1px solid var(--stroke-soft)}
+    .proof-row{display:grid;grid-template-columns:repeat(4,1fr);padding-top:26px;padding-bottom:26px;gap:16px}
+    .proof-item{display:flex;align-items:center;gap:14px;padding:4px 12px;border-left:1px solid #293542}
+    .proof-item:first-child{border-left:0;padding-left:0}
+    .proof-icon{flex:none;width:36px;height:36px;display:grid;place-items:center;border:1px solid #36424b;background:#17212b;border-radius:10px;color:var(--amber)}
+    .proof-icon svg{width:19px;height:19px}
+    .proof-item strong{font:600 13px/1.3 var(--display);display:block}
+    .proof-item span{font-size:11px;color:var(--dim)}
+    .why-intro{display:flex;justify-content:space-between;align-items:end;gap:40px;margin-bottom:42px}
+    .why-intro .section-lead{max-width:535px}
+    .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .feature{background:linear-gradient(160deg,#141e29,#101721);border:1px solid var(--stroke);border-radius:14px;padding:28px 26px 25px;min-height:239px;transition:border-color .2s,transform .2s}
+    .feature:hover{border-color:#58616b;transform:translateY(-3px)}
+    .feature-icon{height:41px;width:41px;border-radius:10px;background:rgba(250,195,107,.08);border:1px solid rgba(250,195,107,.16);display:grid;place-items:center;color:var(--amber)}
+    .feature-icon svg{width:21px;height:21px}
+    .feature h3{font:600 20px/1.3 var(--display);letter-spacing:-.035em;margin:23px 0 10px}
+    .feature p{font-size:13.5px;line-height:1.78;color:#9aa8b7;margin:0}
+    .architecture{background:linear-gradient(180deg,#0b121b,#0c141d);border-top:1px solid var(--stroke-soft);border-bottom:1px solid var(--stroke-soft);position:relative;overflow:hidden}
+    .architecture::after{content:"";position:absolute;right:-150px;top:130px;width:600px;height:600px;border-radius:50%;border:1px solid rgba(105,155,162,.12);box-shadow:0 0 0 75px rgba(105,155,162,.018),0 0 0 145px rgba(105,155,162,.015);pointer-events:none}
+    .architecture-header{display:flex;align-items:end;justify-content:space-between;gap:28px;margin-bottom:38px}
+    .architect-layout{position:relative;z-index:1;display:grid;grid-template-columns:1.06fr .94fr;gap:23px;align-items:stretch}
+    .architect-board{border-radius:14px;border:1px solid #344656;background:#0c151e;padding:29px;position:relative;overflow:hidden}
+    .architect-board::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 42%,rgba(76,140,143,.13),transparent 68%);pointer-events:none}
+    .arch-row{position:relative;display:flex;align-items:stretch;gap:9px;justify-content:center}
+    .arch-block{border:1px solid #3a4d5b;border-radius:10px;background:#111e29;flex:1;min-width:0;text-align:center;padding:17px 10px;font:500 12px/1.4 var(--mono);color:#d9e6ea}
+    .arch-block small{display:block;font:400 10px/1.4 var(--mono);color:#829ca9;margin-top:5px}
+    .arch-block.hot{border-color:rgba(250,195,107,.59);background:linear-gradient(130deg,rgba(250,195,107,.12),rgba(250,195,107,.02))}
+    .arch-block.hot strong{color:var(--amber)}
+    .arch-block.bottom{border-color:#304353;background:#111d29;color:#b9ccd8}
+    .arch-arrow{position:relative;height:43px;width:1px;background:linear-gradient(var(--amber),#427b7b);margin:0 auto}
+    .arch-arrow::after{content:"";position:absolute;bottom:0;left:-4px;border:5px solid transparent;border-top-color:#427b7b;transform:translateY(6px)}
+    .arch-orbit{display:flex;justify-content:space-between;gap:10px;position:relative;padding-top:0}
+    .arch-orbit .arch-block{font-size:11px}
+    .arch-caption{position:relative;font:400 10px/1.7 var(--mono);color:#7891a1;margin:19px 0 0;text-align:center}
+    .architect-steps{display:grid;gap:11px}
+    .architect-step{display:flex;gap:17px;padding:20px 21px;background:#111b26;border:1px solid #283a48;border-radius:12px}
+    .step-number{font:500 11px/1.5 var(--mono);color:var(--amber);flex:none;margin-top:2px}
+    .architect-step h3{margin:0 0 6px;font:600 16px/1.3 var(--display)}
+    .architect-step p{margin:0;color:#9caab9;font-size:12.5px;line-height:1.66}
+    .runtime-head{display:flex;justify-content:space-between;align-items:end;gap:25px;margin-bottom:38px}
+    .runtime-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .runtime-tile{border:1px solid var(--stroke);border-radius:14px;padding:27px 25px 26px;background:#111a25;position:relative;overflow:hidden}
+    .runtime-tile::after{content:"";position:absolute;right:-70px;top:-100px;width:210px;height:210px;background:radial-gradient(circle,rgba(104,217,208,.075),transparent 65%);pointer-events:none}
+    .runtime-tile .runtime-index{font:500 10px var(--mono);color:#6f8090}
+    .runtime-tile h3{font:600 24px/1.2 var(--display);letter-spacing:-.045em;margin:28px 0 10px}
+    .runtime-tile p{font-size:13.5px;color:#9eacbb;line-height:1.75;margin:0 0 24px;min-height:69px}
+    .runtime-tile .link-arrow{font-size:12px}
+    .integrations{background:#101722;border-top:1px solid var(--stroke-soft);border-bottom:1px solid var(--stroke-soft)}
+    .integrations-layout{display:grid;grid-template-columns:.72fr 1.28fr;gap:60px;align-items:start}
+    .integrations .section-h{font-size:clamp(32px,3.6vw,49px)}
+    .integration-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+    .integration-card{border:1px solid #2a3a49;border-radius:12px;background:#151f2b;min-height:190px;padding:23px;display:flex;flex-direction:column;align-items:flex-start;transition:border-color .2s,transform .2s}
+    .integration-card:hover{border-color:#566c77;transform:translateY(-2px)}
+    .integration-label{font:500 10px/1 var(--mono);color:var(--amber);letter-spacing:.075em;margin-bottom:28px}
+    .integration-card strong{font:600 18px/1.2 var(--display)}
+    .integration-card p{font-size:12px;color:#a6b5c2;margin:8px 0 15px;line-height:1.6}
+    .integration-card .link-arrow{margin-top:auto}
+    .quick-header{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:38px}
+    .quick-header .section-lead{max-width:600px}
+    .quick-start-layout{display:grid;grid-template-columns:minmax(0,.39fr) minmax(0,.61fr);gap:23px}.quick-start-layout>*{min-width:0}
+    .install-steps{display:flex;flex-direction:column;gap:12px}
+    .install-step{background:#111923;border:1px solid #283744;border-radius:12px;padding:20px 21px}
+    .install-step .step-tag{color:var(--amber);font:500 10px var(--mono);letter-spacing:.07em}
+    .install-step h3{font:600 17px var(--display);margin:9px 0 7px}
+    .install-step p{font-size:12.5px;color:#98a7b6;line-height:1.7;margin:0}
+    .install-step a{color:#eac484;text-decoration:underline;text-underline-offset:3px}
+    .terminal{border:1px solid #364756;background:#0b111a;border-radius:13px;overflow:hidden;box-shadow:0 24px 70px -44px #000;min-width:0}
+    .terminal-header{height:53px;border-bottom:1px solid #24303d;display:flex;gap:12px;align-items:center;padding:0 17px;background:#111a24}
+    .mac-dots{display:flex;gap:6px;margin-right:5px}
+    .mac-dots i{display:block;height:8px;width:8px;border-radius:50%;background:#6c7680}
+    .mac-dots i:first-child{background:#dd736c}
+    .mac-dots i:nth-child(2){background:#d7a95a}
+    .mac-dots i:last-child{background:#70b48a}
+    .term-filename{font:400 11px var(--mono);color:#8f9fab}
+    .term-tabs{display:flex;gap:3px;margin-left:auto}
+    .term-tab{border:1px solid transparent;background:transparent;color:#81919e;font:500 10px/1 var(--mono);padding:8px 10px;border-radius:6px}
+    .term-tab[aria-selected="true"]{background:#263747;border-color:#354959;color:#f1f5f8}
+    .term-panel-toolbar{display:flex;align-items:center;justify-content:space-between;gap:15px;min-height:49px;padding:10px 20px;border-bottom:1px solid #1d2a35}
+    .starter-select{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+    .starter-select span{font:400 10px var(--mono);color:#7a8f9e;margin-right:4px}
+    .version-button{font:500 10px/1 var(--mono);color:#9eb1bc;padding:6px 8px;background:#15212e;border:1px solid #293845;border-radius:5px;transition:all .17s}
+    .version-button[aria-pressed="true"]{border-color:#a88953;background:#322b20;color:#ffd590}
+    .copy-code{display:flex;gap:7px;align-items:center;border:1px solid #344351;border-radius:7px;background:#151f2b;color:#d9e3e8;padding:8px 10px;font:500 10px/1 var(--mono);white-space:nowrap}
+    .copy-code svg{width:13px;height:13px}
+    .copy-code:hover{border-color:#8a9cac}
+    .code-scroll{height:390px;overflow:auto;padding:23px 23px 28px;scrollbar-color:#394653 #0b111a;scrollbar-width:thin}
+    .code-scroll pre{margin:0;tab-size:4;font:400 11.8px/1.92 var(--mono);white-space:pre;min-width:min-content;color:#d7e1e8}
+    .code-comment{color:#667c8d}.code-string{color:#a9dba4}.code-key{color:#f3c37d}.code-type{color:#89cde7}.code-anno{color:#d7a4e7}
+    .term-note{display:flex;gap:9px;padding:13px 20px;border-top:1px solid #23313e;font-size:11.5px;color:#8c9da9;background:#101925;align-items:flex-start;line-height:1.5}
+    .term-note svg{width:14px;height:14px;flex:none;color:var(--amber);margin-top:2px}
+    .under-code{margin-top:17px;display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}
+    .under-code p{font:400 11px/1.55 var(--mono);color:#778b99;margin:0}
+    .under-code a{color:var(--amber);font-weight:600}
+    .production{background:#0d151e;border-top:1px solid var(--stroke-soft);border-bottom:1px solid var(--stroke-soft)}
+    .prod-layout{display:grid;grid-template-columns:1fr 1fr;gap:62px;align-items:center}
+    .prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+    .prod-cell{padding:23px 20px;border:1px solid #293b49;border-radius:12px;background:#131e29}
+    .prod-cell strong{display:block;font:600 16px var(--display);margin-bottom:9px}
+    .prod-cell p{margin:0;color:#9faeba;font-size:12.5px;line-height:1.72}
+    .prod-cell svg{height:19px;width:19px;color:var(--amber);margin-bottom:20px}
+    .readiness-note{margin-top:26px;padding:18px 20px;border-left:2px solid var(--amber);background:rgba(250,195,107,.04);font-size:12.5px;line-height:1.7;color:#adb9c3}
+    .readiness-note strong{color:var(--amber)}
+    .outro{padding:105px 0}
+    .outro-panel{position:relative;border:1px solid #60523d;border-radius:19px;padding:72px 25px;text-align:center;background:radial-gradient(ellipse 48% 60% at 50% 0%,rgba(250,195,107,.13),transparent 80%),linear-gradient(135deg,#1a1d22,#141b24);overflow:hidden}
+    .outro-panel::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.25;background-image:linear-gradient(90deg,rgba(238,230,209,.16) 1px,transparent 1px);background-size:76px 76px;mask-image:linear-gradient(transparent,#000,transparent)}
+    .outro-panel>*{position:relative;z-index:1}
+    .outro-panel .eyebrow{justify-content:center}
+    .outro-panel h2{font:600 clamp(34px,4.8vw,59px)/1.1 var(--display);letter-spacing:-.055em;max-width:740px;margin:20px auto 18px}
+    .outro-panel p{max-width:550px;margin:0 auto 30px;color:#b3bec6;font-size:15.5px;line-height:1.8}
+    .outro-panel .hero-ctas{justify-content:center}
+    .site-footer{border-top:1px solid var(--stroke);background:#090e15}
+    .footer-top{display:grid;grid-template-columns:1.2fr 1fr;gap:50px;padding-top:60px;padding-bottom:57px}
+    .footer-brand p{max-width:360px;margin:18px 0 0;color:#8a99a8;font-size:13px;line-height:1.8}
+    .footer-links{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+    .footer-links h3{font:600 11px var(--mono);letter-spacing:.075em;text-transform:uppercase;color:#c5d0da;margin:0 0 15px}
+    .footer-links a{display:block;font-size:12px;color:#8f9eac;margin:0 0 10px;transition:color .2s}
+    .footer-links a:hover{color:var(--amber)}
+    .footer-bottom{padding:19px 0;border-top:1px solid var(--stroke-soft);display:flex;justify-content:space-between;gap:20px;font:400 10.5px/1.6 var(--mono);color:#788897}
+    .footer-bottom a{color:#acb6c0}
+    @media (max-width:1100px){.nav-menu{gap:18px}.hero-layout{gap:26px}.hero h1{font-size:clamp(44px,5.5vw,64px)}.graph-flow{grid-template-columns:minmax(0,.85fr) 16px minmax(0,1fr);gap:6px}.integrations-layout{gap:33px}}
+    @media (max-width:900px){.wrap{padding-inline:26px}.nav-inner{height:71px}.menu-toggle{display:flex;order:4}.nav-action{margin-left:auto}.nav-menu{display:none;position:absolute;left:0;right:0;top:70px;background:#0c141e;padding:19px 26px 25px;border-bottom:1px solid #334351;box-shadow:0 20px 24px rgba(0,0,0,.3);flex-direction:column;gap:0;align-items:stretch}.nav-menu.open{display:flex}.nav-menu a{padding:13px 0;font-size:15px;border-bottom:1px solid #22313e}.hero{padding:69px 0 77px}.hero-layout{grid-template-columns:1fr;gap:46px}.hero-left{padding:0;max-width:710px}.hero h1{font-size:clamp(47px,7vw,68px)}.hero-visual{max-width:710px;min-height:490px}.proof-row{grid-template-columns:repeat(2,1fr);row-gap:20px}.proof-item:nth-child(3){border-left:0;padding-left:0}.why-intro,.architecture-header,.runtime-head,.quick-header{display:block}.why-intro .section-lead{margin-top:19px}.feature-grid{grid-template-columns:repeat(2,1fr)}.architect-layout,.integrations-layout,.quick-start-layout,.prod-layout{grid-template-columns:minmax(0,1fr);gap:27px}.integrations-layout>.integrations-copy{margin-bottom:4px}.runtime-tiles{grid-template-columns:repeat(3,1fr)}.runtime-tile{padding:23px 20px}.runtime-tile h3{font-size:21px}.prod-layout{gap:30px}}
+    @media (max-width:620px){.wrap{padding-inline:20px}.section-space{padding:75px 0}.nav-github{display:none}.nav-inner{gap:12px}.nav-action .btn{padding:11px 13px;font-size:12px}.wordmark{font-size:21px}.brand-mark{width:32px;height:32px}.hero{padding:50px 0 63px}.hero h1{font-size:clamp(43px,11vw,61px);letter-spacing:-.062em;margin:23px 0}.hero-desc{font-size:15.5px;line-height:1.75}.hero-footnote{font-size:10px}.hero-visual{padding:15px;min-height:unset}.graph-input{padding:12px}.graph-input p{font-size:9.5px}.graph-flow{grid-template-columns:minmax(0,.91fr) 15px minmax(0,1fr);gap:5px;min-height:210px}.plan-core{padding:15px 10px;min-height:205px}.core-name{font-size:13px}.core-sub{font-size:9px}.core-steps span{font-size:8px;padding:5px}.core-icon{margin-bottom:13px}.runtime-item{padding:10px 9px;min-height:56px}.runtime-item strong{font-size:10px}.runtime-item span{font-size:8px}.graph-bottom{font-size:9px}.proof-row{padding-top:20px;padding-bottom:20px;gap:12px}.proof-item{padding-left:9px;gap:9px}.proof-icon{width:32px;height:32px}.proof-item strong{font-size:11px}.proof-item span{font-size:9px}.section-h{font-size:clamp(33px,8.5vw,43px)}.section-lead{font-size:15px}.feature-grid,.runtime-tiles,.integration-grid,.prod-grid{grid-template-columns:1fr}.feature{min-height:0}.architect-board{padding:21px 15px}.architect-step{padding:17px}.runtime-tile p{min-height:0}.runtime-tile h3{margin:20px 0 10px}.integration-card{min-height:160px}.quick-header .section-lead{margin-bottom:0}.terminal-header{padding:0 11px;gap:6px}.term-tab{padding:8px 8px}.code-scroll{height:365px;padding:18px 15px}.code-scroll pre{font-size:10.8px}.term-panel-toolbar{padding:9px 12px}.starter-select{gap:4px}.starter-select span{width:100%;margin-bottom:3px}.footer-top{grid-template-columns:1fr;gap:36px;padding:44px 0}.footer-links{gap:16px}.footer-bottom{display:block}.footer-bottom span{display:block;margin-bottom:6px}.outro{padding:70px 0}.outro-panel{padding:54px 17px}.btn{padding:13px 16px;font-size:12.5px}}
+    @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+  </style>
 </head>
 <body>
-<header class="nav">
-  <div class="container nav-inner">
-    <input type="checkbox" id="nav-toggle" class="nav-toggle" tabindex="-1" aria-hidden="true">
-    <label class="burger" for="nav-toggle" aria-label="Toggle navigation"><span></span><span></span></label>
-    <a class="brand" href="#top">Cortex<span>J</span></a>
-    <nav class="nav-links" aria-label="Sections">
-      <a href="#why">Why</a>
-      <a href="#how">How it works</a>
-      <a href="#runtimes">Runtimes</a>
-      <a href="#platform">Platform</a>
-      <a href="#who">Who it's for</a>
-      <a href="/CortexJ-site/docs/">Docs</a>
-    </nav>
-    <a class="btn-primary btn-nav" href="#quick-start">Get started</a>
-  </div>
-</header>
-<main id="top">
-
-  <!-- ============================== HERO ============================== -->
-  <section class="hero">
-    <div class="hero-grid-bg" aria-hidden="true"></div>
-    <div class="container hero-inner">
-      <div class="hero-copy">
-        <p class="pill" data-rise>Portable AI execution for the JVM</p>
-        <h1 data-rise="2">One JVM API.<br>Compatible models.<br><em>The best available runtime.</em></h1>
-        <p class="hero-sub" data-rise="3">The platform answers the infrastructure questions itself — where the model lives, which revision to use, which runtime fits the hardware, whether memory suffices, and what the fallback is. Including <em>why</em> the chosen execution path was selected.</p>
-        <div class="cta-row" data-rise="4">
-          <a class="btn-primary" href="/CortexJ-site/docs/quickstart/">Get started</a>
-          <a class="btn-ghost" href="#how">How it works<span class="arr">→</span></a>
-        </div>
-        <p class="hero-note" data-rise="5">Java 8 → 25 · local & remote runtimes · no mandatory Python</p>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header" id="top">
+    <div class="wrap nav-inner">
+      <a class="wordmark" href="#top" aria-label="CortexJ home"><span class="brand-mark" aria-hidden="true"><span>C</span></span><span>Cortex<b>J</b></span></a>
+      <nav id="primary-nav" class="nav-menu" aria-label="Main navigation">
+        <a href="#why">Why CortexJ</a><a href="#architecture">How it works</a><a href="#runtimes">Runtimes</a><a href="#integrations">Integrations</a><a href="https://okostiukevych.github.io/CortexJ-site/docs/">Documentation</a>
+      </nav>
+      <div class="nav-action">
+        <a class="nav-github" href="https://github.com/okostiukevych/CortexJ" target="_blank" rel="noopener noreferrer" aria-label="Open CortexJ GitHub (new tab)"><svg class="github-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .95C5.9.95.95 5.9.95 12c0 4.88 3.16 9.01 7.55 10.47.55.1.75-.24.75-.54 0-.27-.01-.99-.01-1.95-3.07.67-3.72-1.3-3.72-1.3-.5-1.28-1.23-1.62-1.23-1.62-1-.68.08-.66.08-.66 1.1.08 1.67 1.13 1.67 1.13.98 1.67 2.57 1.19 3.2.91.1-.7.38-1.19.69-1.46-2.45-.28-5.03-1.23-5.03-5.46 0-1.21.43-2.2 1.13-2.98-.12-.28-.49-1.41.11-2.95 0 0 .92-.29 3.02 1.14.87-.24 1.81-.36 2.74-.36s1.87.12 2.74.36c2.1-1.43 3.02-1.14 3.02-1.14.6 1.54.23 2.67.11 2.95.71.78 1.13 1.77 1.13 2.98 0 4.24-2.58 5.17-5.04 5.45.39.34.73.99.73 2 0 1.44-.01 2.59-.01 2.94 0 .3.2.64.76.53 4.38-1.47 7.54-5.59 7.54-10.46C23.05 5.9 18.1.95 12 .95Z"/></svg></a>
+        <a href="#quickstart" class="btn btn-primary">Get started <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
       </div>
-      <div class="hero-term" data-rise="3">
-        <div class="term-head"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-title">cortexj — zsh</span></div>
-<pre><code><span class="tk-c">$</span> cortexj plan ./Qwen3-8B-Q4_K_M.gguf
-
-<span class="tk-k">Model:</span>       Qwen3-8B-Q4_K_M.gguf
-<span class="tk-k">Revision:</span>    local-491400032 (immutable)
-
-<span class="tk-k">Selected:</span>
-  runtime:   <span class="tk-a">llamacpp</span>
-  device:    <span class="tk-a">GPU</span> <span class="tk-c">(Apple Metal)</span>
-  memory:    817 MiB <span class="tk-ok">✓ comfortable</span>
-
-<span class="tk-k">Reasons:</span>
-  + localFile            <span class="tk-c">[PLANNER_NOTE]</span>
-  + nativeFormat         <span class="tk-c">[NATIVE_FORMAT]</span>
-  + probeHealth: AVAILABLE <span class="tk-c">[HEALTH]</span>
-
-<span class="tk-k">Fallback:</span>  <span class="tk-dim">1. openai-remote / REMOTE</span></code></pre>
-      </div>
+      <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open menu"><svg id="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
-  </section>
-
-  <!-- ============================== WHY ============================== -->
-  <section id="why">
-    <div class="container">
-      <p class="label" data-rise>// what it's for</p>
-      <h2 class="section-title" data-rise>Stop hand-wiring model bindings</h2>
-      <p class="section-sub" data-rise="2">CortexJ is an AI runtime orchestration and model portability platform for the JVM. You write against one API — the platform decides where the model lives, which runtime serves it, and what to do when hardware or policy says no.</p>
-      <div class="grid cols-3">
-        <div class="card" data-rise>
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 12.5l9 5 9-5"/><path d="M3 16.5l9 5 9-5"/></svg></div>
-          <h3>Model portability</h3>
-          <p>One API for any compatible model — local, Hugging Face or plain HTTP repositories. Immutable revisions: what you resolved is what runs.</p>
+  </header>
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap hero-layout">
+        <div class="hero-left">
+          <div class="pill"><span class="pill-dot" aria-hidden="true"></span> OPEN SOURCE · 1.0.0-RC1 AVAILABLE</div>
+          <h1 id="hero-title">Your Java code.<br><span class="soft">Any compatible</span><br><span class="accent">AI runtime.</span></h1>
+          <p class="hero-desc">Stop stitching together models, native binaries, hardware checks, and fallbacks. CortexJ gives JVM teams one API and an explainable execution planner that selects how a model runs.</p>
+          <div class="hero-ctas"><a href="#quickstart" class="btn btn-primary">Start building <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a><a href="https://github.com/okostiukevych/CortexJ" target="_blank" rel="noopener noreferrer" class="btn btn-secondary"><svg class="github-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .95C5.9.95.95 5.9.95 12c0 4.88 3.16 9.01 7.55 10.47.55.1.75-.24.75-.54 0-.27-.01-.99-.01-1.95-3.07.67-3.72-1.3-3.72-1.3-.5-1.28-1.23-1.62-1.23-1.62-1-.68.08-.66.08-.66 1.1.08 1.67 1.13 1.67 1.13.98 1.67 2.57 1.19 3.2.91.1-.7.38-1.19.69-1.46-2.45-.28-5.03-1.23-5.03-5.46 0-1.21.43-2.2 1.13-2.98-.12-.28-.49-1.41.11-2.95 0 0 .92-.29 3.02 1.14.87-.24 1.81-.36 2.74-.36s1.87.12 2.74.36c2.1-1.43 3.02-1.14 3.02-1.14.6 1.54.23 2.67.11 2.95.71.78 1.13 1.77 1.13 2.98 0 4.24-2.58 5.17-5.04 5.45.39.34.73.99.73 2 0 1.44-.01 2.59-.01 2.94 0 .3.2.64.76.53 4.38-1.47 7.54-5.59 7.54-10.46C23.05 5.9 18.1.95 12 .95Z"/></svg> View on GitHub</a></div>
+          <p class="hero-footnote">Java 8 → 25 <span></span> Local + remote <span></span> No mandatory Python</p>
         </div>
-        <div class="card" data-rise>
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="5" r="2.2"/><circle cx="18" cy="5" r="2.2"/><circle cx="12" cy="19" r="2.2"/><path d="M8.2 5h7.6M12 7.2v9.6"/></svg></div>
-          <h3>Runtime orchestration</h3>
-          <p>The execution planner picks the best available runtime for each model and machine — deterministic scoring, hard constraints, fallback chains.</p>
-        </div>
-        <div class="card" data-rise>
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1L3.5 8.5"/><path d="M3.5 3.5v5h5"/><path d="M12 8v4.2l2.8 1.6"/></svg></div>
-          <h3>Java 8 → 25</h3>
-          <p>Starters for every LTS line, identical business code. A starter built for a newer JVM fails fast with the exact remediation.</p>
-        </div>
-        <div class="card" data-rise>
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h7"/><circle cx="18" cy="17" r="3.2"/><path d="M18 15.6v2.8l1.8 1"/></svg></div>
-          <h3>Explainable decisions</h3>
-          <p>Every plan reports why: hard constraints considered, scores, memory estimates. No mystery paths, no provider-order luck.</p>
-        </div>
-        <div class="card" data-rise>
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 4v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V7l7-4z"/><path d="M9.5 12l1.8 1.8 3.4-3.6"/></svg></div>
-          <h3>Production-grade, not demo-grade</h3>
-          <p>Lockfiles for reproducible plans, verified air-gap bundles, trust policies, checksum-verified downloads, typed errors with remediation. Built for audits, not demos.</p>
-        </div>
-        <div class="card" data-rise>
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9l3 3-3 3M13 15h4"/></svg></div>
-          <h3>Manage it without an IDE</h3>
-          <p>A CLI covers the whole lifecycle: <code>doctor</code> checks the machine, <code>plan</code> predicts, <code>pull</code> downloads, <code>run</code> executes, <code>server</code> exposes an OpenAI-compatible API.</p>
-        </div>
-      </div>
-      <div class="compare-wrap" data-rise>
-        <table class="compare">
-          <thead><tr><th></th><th>Hand-rolled bindings</th><th class="hot-col">CortexJ</th></tr></thead>
-          <tbody>
-            <tr><th>Model source</th><td>Per-provider glue code, mutable tags</td><td>Repositories with immutable revisions — local, Hugging Face, HTTP</td></tr>
-            <tr><th>Choosing a runtime</th><td>Hardcoded, trial and error</td><td>Deterministic planner with explanations and fallback chains</td></tr>
-            <tr><th>Memory</th><td>Hope, then OOM</td><td>Header-based estimation enforced as a hard constraint</td></tr>
-            <tr><th>Java versions</th><td>Separate stacks, or no support</td><td>One codebase, Java 8 → 25</td></tr>
-            <tr><th>Reproducibility</th><td>"Works on my machine"</td><td>Pinned lockfiles, verified air-gap bundles</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================== HOW ============================== -->
-  <section id="how">
-    <div class="container">
-      <p class="label" data-rise>// how it works</p>
-      <h2 class="section-title" data-rise>Plan first. Execute second. Explain always.</h2>
-      <p class="section-sub" data-rise="2">Loading a model produces an execution plan before anything is downloaded or started. The plan is deterministic — same inputs, same plan — and it is explainable.</p>
-      <div class="pipeline" data-rise>
-        <div class="pipe-step"><strong>Your code</strong><span>one API, any model</span></div>
-        <div class="pipe-arrow">→</div>
-        <div class="pipe-step hot"><strong>CortexJ planner</strong><span>candidates · policies · memory</span></div>
-        <div class="pipe-arrow">→</div>
-        <div class="pipe-step"><strong>Runtime SPI</strong><span>ServiceLoader plugins</span></div>
-        <div class="pipe-arrow">→</div>
-        <div class="pipe-step"><strong>CPU · GPU · NPU</strong><span>best available hardware</span></div>
-      </div>
-      <div class="plan-note" data-rise><b>plan ▸</b> runtime: llama.cpp · hardware: metal · memory: 6.2 / 8.0 GB ✓ · fallback: onnx · reasons: offline policy, gpu available</div>
-      <div class="how-list">
-        <div class="how-item" data-rise><span class="num">01</span><h3>Plan before execution</h3><p>Ask what will happen — <code>cortexj plan</code> — before downloading or running anything.</p></div>
-        <div class="how-item" data-rise><span class="num">02</span><h3>Deterministic by construction</h3><p>Hard constraints first, then scoring with defined tie-breaks. Provider order never decides.</p></div>
-        <div class="how-item" data-rise><span class="num">03</span><h3>Graceful fallback</h3><p>When the first choice can't run, the planner walks the fallback chain — and tells you.</p></div>
-      </div>
-      <p class="label label-sub" data-rise>// what's inside</p>
-      <div class="chip-groups">
-        <div data-rise>
-          <p class="chip-group-title">Core (Java 8)</p>
-          <div class="chips">
-            <span class="chip"><b>api</b> — one public contract</span>
-            <span class="chip"><b>planner</b> — deterministic decisions</span>
-            <span class="chip"><b>cache</b> — checksum-safe artifact store</span>
-            <span class="chip"><b>repositories</b> — local · Hugging Face · HTTP</span>
-            <span class="chip"><b>lockfiles & bundles</b> — reproducible deployments</span>
+        <div class="hero-visual" role="img" aria-label="Architecture illustration showing a Java application sending a model reference to the CortexJ execution planner, which selects between llama.cpp, ONNX Runtime and remote endpoints">
+          <div class="graph-top"><span class="overline">CORTEXJ / EXECUTION GRAPH</span><span class="graph-id">ARCHITECTURE VIEW</span></div>
+          <div class="graph-body">
+            <div class="graph-label">01 / APPLICATION REQUEST</div>
+            <div class="graph-input"><p><span class="graph-file">ModelReference.of</span>("Qwen/Qwen3-8B")</p><span class="input-chip">JVM</span></div>
+            <div class="graph-flow">
+              <div class="plan-core"><div class="core-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.2 2.2m8.4 8.4 2.2 2.2m0-12.8-2.2 2.2m-8.4 8.4-2.2 2.2"/><rect x="8" y="8" width="8" height="8" rx="2"/></svg></div><div class="core-name">CortexJ<br>Execution Planner</div><div class="core-sub">deterministic selection</div><div class="core-steps"><span>FORMAT</span><span>MEMORY</span><span>POLICY</span><span>HEALTH</span></div></div>
+              <div class="flow-line" aria-hidden="true"></div>
+              <div class="runtime-stack"><div class="graph-label" style="margin:0 0 1px">02 / EXECUTION</div><div class="runtime-item selected"><div><strong>llama.cpp</strong><span>GGUF · local inference</span></div><i class="runtime-light" aria-hidden="true"></i></div><div class="runtime-item"><div><strong>ONNX Runtime</strong><span>ONNX · local inference</span></div><i class="runtime-light" aria-hidden="true"></i></div><div class="runtime-item"><div><strong>Remote API</strong><span>OpenAI-compatible</span></div><i class="runtime-light" aria-hidden="true"></i></div></div>
+            </div>
+            <div class="graph-result"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.6 2.6L16.5 9"/></svg><div><strong>Execution path selected</strong><span>Reasons + fallback remain inspectable</span></div></div>
           </div>
-        </div>
-        <div data-rise>
-          <p class="chip-group-title">Execution & ops</p>
-          <div class="chips">
-            <span class="chip"><b>runtimes</b> — onnx · llamacpp · remote · isolated worker</span>
-            <span class="chip"><b>server</b> — OpenAI-compatible endpoint</span>
-            <span class="chip"><b>observability</b> — OpenTelemetry metrics & spans</span>
-            <span class="chip"><b>converters</b> — GGUF F32↔F16, Safetensors→GGUF</span>
-            <span class="chip"><b>cli</b> — the whole lifecycle without an IDE</span>
-          </div>
+          <div class="graph-bottom"><span><strong>DETERMINISTIC PLANNING</strong> <span class="point">●</span> EXPLAINABLE REASONS</span><span>Illustrative architecture</span></div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- ============================== RUNTIMES ============================== -->
-  <section id="runtimes">
-    <div class="container">
-      <p class="label" data-rise>// runtimes & integrations</p>
-      <h2 class="section-title" data-rise>Pluggable everything</h2>
-      <p class="section-sub" data-rise="2">Runtimes and repositories are plugins discovered via ServiceLoader. The planner decides from descriptors and policies, never from provider order — and adapters slot CortexJ into the frameworks you already use.</p>
-      <div class="chip-groups">
-        <div data-rise>
-          <p class="chip-group-title">Runtimes</p>
-          <div class="chips">
-            <span class="chip"><b>ONNX Runtime</b> — probe, session load, tokenizer, embeddings</span>
-            <span class="chip"><b>llama.cpp</b> — managed llama-server bridge</span>
-            <span class="chip"><b>OpenAI-compatible remote</b> — vLLM, llama-server, gateways</span>
-            <span class="chip"><b>DJL</b> — honest engine probe</span>
-          </div>
-        </div>
-        <div data-rise>
-          <p class="chip-group-title">Adapters & tooling</p>
-          <div class="chips">
-            <span class="chip">Spring AI + Boot starter</span>
-            <span class="chip">Tool calling (agent loop)</span>
-            <span class="chip">LangChain4j</span>
-            <span class="chip">OpenTelemetry</span>
-            <span class="chip">CLI — doctor · plan · run</span>
-            <span class="chip">Lockfiles & air-gap bundles</span>
-            <span class="chip">GGUF & Safetensors converters</span>
-            <span class="chip">Declarative @ModelPrompt API</span>
-            <span class="chip">TCK for provider authors</span>
-            <span class="chip">Lab & Jupyter kernel</span>
-            <span class="chip">Data frames & fingerprinting</span>
-            <span class="chip">Experiments store</span>
-            <span class="chip">LoRA / PEFT & safetensors</span>
-            <span class="chip">Tensor + autograd</span>
-          </div>
-        </div>
+    </section>
+    <div class="proof-strip"><div class="wrap proof-row">
+      <div class="proof-item"><div class="proof-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 8 3 12l4 4m10-8 4 4-4 4m-3-11-4 14"/></svg></div><div><strong>Java 8–25</strong><span>Five LTS starters</span></div></div>
+      <div class="proof-item"><div class="proof-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m12 2 9 5v10l-9 5-9-5V7l9-5Z"/><path d="m3.5 7.3 8.5 5 8.5-5M12 12.5v9"/></svg></div><div><strong>Pluggable runtimes</strong><span>Local + remote models</span></div></div>
+      <div class="proof-item"><div class="proof-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 19V5h16v14H4Zm4-9h8m-8 4h5"/><path d="m15 15 2 2 3-4"/></svg></div><div><strong>Explainable plans</strong><span>Constraints + reasons</span></div></div>
+      <div class="proof-item"><div class="proof-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg></div><div><strong>Apache 2.0</strong><span>Open-source project</span></div></div>
+    </div></div>
+    <section class="section-space" id="why" aria-labelledby="why-title"><div class="wrap"><div class="why-intro"><div><div class="eyebrow">01 / THE PROBLEM</div><h2 class="section-h" id="why-title">AI models are portable.<br>Execution often isn't.</h2></div><p class="section-lead">Your application shouldn't need to know which binary, model format, execution provider, or GPU happens to be available. Move that complexity out of business logic.</p></div>
+      <div class="feature-grid">
+        <article class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m12 2 9 5-9 5-9-5 9-5Zm-9 10 9 5 9-5m-18 5 9 5 9-5"/></svg></div><h3>One model API</h3><p>Load and use compatible models from local files, Hugging Face, or HTTP-backed repositories through a unified JVM contract.</p></article>
+        <article class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7 6h10M6 8l5 8m7-8-5 8"/></svg></div><h3>Smart execution planning</h3><p>Filter incompatible runtime candidates by format, JVM, hardware, task, and memory. Rank the valid paths deterministically.</p></article>
+        <article class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 5h16v14H4zM8 9h8m-8 4h5"/><circle cx="17" cy="15" r="1"/></svg></div><h3>Explain every decision</h3><p>Inspect selected runtimes, rejected candidates, reason codes and fallback behavior instead of debugging mystery execution paths.</p></article>
+        <article class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3v18M5 7h14M6 17h12M4 12h16"/><circle cx="12" cy="12" r="9"/></svg></div><h3>Run local or remote</h3><p>Connect llama.cpp, ONNX Runtime, and OpenAI-compatible endpoints via pluggable runtimes, with explicit offline policies.</p></article>
+        <article class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8m-8 4h8m-8 4h4"/><path d="m15 16 2 2 3-3"/></svg></div><h3>Deploy reproducibly</h3><p>Use pinned model revisions, lockfiles, checksum verification and offline bundles to control what reaches production.</p></article>
+        <article class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m4 9 8-5 8 5v7l-8 5-8-5V9Zm0 0 8 5 8-5m-8 5v7"/></svg></div><h3>Stay in the JVM</h3><p>Use the same application-level API across Java 8, 11, 17, 21, and 25 — without a mandatory Python runtime.</p></article>
+      </div></div></section>
+    <section class="section-space architecture" id="architecture" aria-labelledby="architecture-title"><div class="wrap"><div class="architecture-header"><div><div class="eyebrow">02 / UNDER THE HOOD</div><h2 class="section-h" id="architecture-title">The plan comes first.<br>The model comes next.</h2><p class="section-lead">A predictable execution path — before a heavyweight model is started.</p></div><a href="https://okostiukevych.github.io/CortexJ-site/docs/concepts/planner/" class="link-arrow">Explore the planner <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div>
+      <div class="architect-layout"><div class="architect-board"><div class="arch-row"><div class="arch-block">Application request<small>ModelReference · capability</small></div></div><div class="arch-arrow" aria-hidden="true"></div><div class="arch-row"><div class="arch-block hot"><strong>CORTEXJ EXECUTION PLANNER</strong><small>Resolve → Validate → Score → Explain</small></div></div><div class="arch-arrow" aria-hidden="true"></div><div class="arch-orbit"><div class="arch-block bottom">llama.cpp<small>GGUF</small></div><div class="arch-block bottom">ONNX Runtime<small>ONNX</small></div><div class="arch-block bottom">Remote API<small>HTTP</small></div></div><p class="arch-caption">A conceptual overview — candidate viability depends on model, policy, machine and installed runtimes.</p></div>
+      <div class="architect-steps"><article class="architect-step"><div class="step-number">01</div><div><h3>Discover available execution paths</h3><p>Inspect model metadata, candidate artifacts, installed providers and hardware capabilities.</p></div></article><article class="architect-step"><div class="step-number">02</div><div><h3>Eliminate impossible candidates</h3><p>Enforce JVM support, model tasks, estimated memory footprint, format compatibility, and offline constraints.</p></div></article><article class="architect-step"><div class="step-number">03</div><div><h3>Choose, explain, and recover</h3><p>Apply deterministic scoring and record why each candidate was selected or rejected, including valid fallbacks.</p></div></article></div></div>
+    </div></section>
+    <section class="section-space" id="runtimes" aria-labelledby="runtimes-title"><div class="wrap"><div class="runtime-head"><div><div class="eyebrow">03 / EXECUTION BACKENDS</div><h2 class="section-h" id="runtimes-title">Multiple runtimes.<br>One entry point.</h2><p class="section-lead">Pick a model; let the planner reason about the execution environment. Or apply your own runtime and privacy policies.</p></div></div>
+      <div class="runtime-tiles"><article class="runtime-tile"><span class="runtime-index">RUNTIME / 01</span><h3>llama.cpp</h3><p>Managed llama-server integration for local GGUF inference, with generation and token streaming.</p><a href="https://okostiukevych.github.io/CortexJ-site/docs/concepts/runtimes/#llamacpp" class="link-arrow">Runtime details →</a></article><article class="runtime-tile"><span class="runtime-index">RUNTIME / 02</span><h3>ONNX Runtime</h3><p>Local ONNX execution, including embeddings, with CPU support and provider-dependent acceleration.</p><a href="https://okostiukevych.github.io/CortexJ-site/docs/concepts/runtimes/#onnx-runtime" class="link-arrow">Runtime details →</a></article><article class="runtime-tile"><span class="runtime-index">RUNTIME / 03</span><h3>Remote endpoints</h3><p>OpenAI-compatible inference endpoints, including self-hosted servers and remote gateways.</p><a href="https://okostiukevych.github.io/CortexJ-site/docs/concepts/runtimes/#openai-compatible-remote" class="link-arrow">Runtime details →</a></article></div>
+    </div></section>
+    <section class="section-space integrations" id="integrations" aria-labelledby="integrations-title"><div class="wrap integrations-layout"><div class="integrations-copy"><div class="eyebrow">04 / ECOSYSTEM</div><h2 class="section-h" id="integrations-title">Fits the stack<br>you already have.</h2><p class="section-lead">CortexJ isn't trying to replace your application framework. It handles model execution underneath it, with optional adapters for the tools Java teams already use.</p><div style="margin-top:28px"><a href="https://okostiukevych.github.io/CortexJ-site/docs/integrations/" class="link-arrow">Read integration guide →</a></div></div>
+      <div class="integration-grid"><a class="integration-card" href="https://okostiukevych.github.io/CortexJ-site/docs/integrations/#spring-ai"><span class="integration-label">FRAMEWORK ADAPTER</span><strong>Spring AI</strong><p>Chat, streaming chat and embedding model adapters.</p><span class="link-arrow">Explore integration →</span></a><a class="integration-card" href="https://okostiukevych.github.io/CortexJ-site/docs/integrations/#spring-boot-starter"><span class="integration-label">AUTO-CONFIGURATION</span><strong>Spring Boot</strong><p>Property-based model configuration with an auto-wired ChatModel.</p><span class="link-arrow">Explore integration →</span></a><a class="integration-card" href="https://okostiukevych.github.io/CortexJ-site/docs/integrations/#langchain4j"><span class="integration-label">FRAMEWORK ADAPTER</span><strong>LangChain4j</strong><p>Plug CortexJ model handles into existing LLM applications.</p><span class="link-arrow">Explore integration →</span></a><a class="integration-card" href="https://okostiukevych.github.io/CortexJ-site/docs/production/"><span class="integration-label">OBSERVABILITY</span><strong>Production tooling</strong><p>OpenTelemetry, lockfiles, air-gap bundles and policy controls.</p><span class="link-arrow">Explore production →</span></a></div>
+    </div></section>
+    <section class="section-space" id="quickstart" aria-labelledby="quickstart-title"><div class="wrap"><div class="quick-header"><div><div class="eyebrow">05 / GET STARTED</div><h2 class="section-h" id="quickstart-title">From Maven to models.</h2><p class="section-lead">Choose your JVM line, add the CortexJ starter, and call the API. The repository and dependency snippets below are ready to copy.</p></div><a href="https://okostiukevych.github.io/CortexJ-site/docs/quickstart/" class="link-arrow">Full quickstart →</a></div>
+      <div class="quick-start-layout"><div class="install-steps"><article class="install-step"><div class="step-tag">STEP 01</div><h3>Add the Maven repository</h3><p>Until Maven Central publication, CortexJ artifacts are hosted in the <a href="https://okostiukevych.github.io/CortexJ-maven/" target="_blank" rel="noopener noreferrer">CortexJ Maven repository</a>.</p></article><article class="install-step"><div class="step-tag">STEP 02</div><h3>Select your Java starter</h3><p>Use the starter matching the JVM version of your application. The shared API stays the same across Java 8–25.</p></article><article class="install-step"><div class="step-tag">STEP 03</div><h3>Resolve and execute</h3><p>Configure an appropriate local runtime or remote endpoint, load a compatible model, and inspect the execution plan.</p></article><a href="https://okostiukevych.github.io/CortexJ-site/docs/installation/" class="btn btn-secondary" style="width:fit-content;margin-top:10px">Installation guide <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div>
+      <div><div class="terminal"><div class="terminal-header"><span class="mac-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="term-filename" id="code-filename">pom.xml</span><div class="term-tabs" role="tablist" aria-label="Quickstart code samples"><button type="button" class="term-tab" role="tab" id="tab-maven" aria-selected="true" aria-controls="code-panel" data-tab="maven">Maven</button><button type="button" class="term-tab" role="tab" id="tab-java" aria-selected="false" aria-controls="code-panel" data-tab="java" tabindex="-1">Java</button><button type="button" class="term-tab" role="tab" id="tab-cli" aria-selected="false" aria-controls="code-panel" data-tab="cli" tabindex="-1">CLI</button></div></div>
+        <div class="term-panel-toolbar"><div class="starter-select" aria-label="Select Java version"><span>JAVA STARTER</span><button class="version-button" type="button" aria-pressed="false" data-java="8">8</button><button class="version-button" type="button" aria-pressed="false" data-java="11">11</button><button class="version-button" type="button" aria-pressed="false" data-java="17">17</button><button class="version-button" type="button" aria-pressed="true" data-java="21">21</button><button class="version-button" type="button" aria-pressed="false" data-java="25">25</button></div><button type="button" id="copy-code" class="copy-code" aria-label="Copy code snippet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span id="copy-label">Copy</span></button></div>
+        <div class="code-scroll" role="tabpanel" id="code-panel" aria-labelledby="tab-maven" tabindex="0"><pre><code id="code-content"></code></pre></div><div class="term-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8v1"/></svg><span id="code-tip">Use the BOM to pin compatible CortexJ module versions.</span></div></div><div class="under-code"><p>RELEASE: <strong style="color:#c7d4df">1.0.0-RC1</strong> · <a href="https://github.com/okostiukevych/CortexJ/releases/tag/1.0.0-RC1" target="_blank" rel="noopener noreferrer">Release notes ↗</a></p><a class="link-arrow" href="https://okostiukevych.github.io/CortexJ-site/docs/reference/error-codes/">Error codes & fixes →</a></div></div>
       </div>
-    </div>
-  </section>
-
-  <!-- ============================== PLATFORM ============================== -->
-  <section id="platform">
-    <div class="container">
-      <p class="label" data-rise>// beyond inference</p>
-      <h2 class="section-title" data-rise>The platform tracks are shipped</h2>
-      <p class="section-sub" data-rise="2">CortexJ is more than an inference runtime. The tracks below are implemented, tested and documented today as incubating 0.x modules — the Runtime stays the production product, no PyTorch-replacement claims.</p>
-      <div class="grid cols-3">
-        <a class="card doc-link" href="/CortexJ-site/docs/platform/lab/" data-rise>
-          <h3>Lab & Notebook</h3>
-          <p>JShell sessions, a Jupyter wire-protocol kernel in pure Java, rich display, export to a Maven skeleton — interactive AI without Python.</p>
-        </a>
-        <a class="card doc-link" href="/CortexJ-site/docs/platform/data/" data-rise>
-          <h3>Data</h3>
-          <p>Typed <code>Frame</code>/<code>Schema</code> with seven adapters (CSV, Parquet, JDBC, Tablesaw, Arrow, JSON, Tribuo) and cross-adapter content fingerprinting.</p>
-        </a>
-        <a class="card doc-link" href="/CortexJ-site/docs/platform/experiments/" data-rise>
-          <h3>Experiments</h3>
-          <p>Every run reproducible by construction: parameters, metrics, artifacts, model revision, dataset hash, seeds and environment captured into a local store.</p>
-        </a>
-        <a class="card doc-link" href="/CortexJ-site/docs/platform/training/" data-rise>
-          <h3>Training & PEFT</h3>
-          <p>Unified Trainer API over pluggable backends, LoRA with merge math, standard safetensors interop, multi-node data-parallel training.</p>
-        </a>
-        <a class="card doc-link" href="/CortexJ-site/docs/platform/tensor/" data-rise>
-          <h3>Tensor & Autograd</h3>
-          <p>Engine-neutral tensors (CPU/Vector/LibTorch with parity conformance), tape-based gradients verified by differential tests, NN modules.</p>
-        </a>
-        <a class="card doc-link" href="/CortexJ-site/docs/platform/training/#distributed-training" data-rise>
-          <h3>Distributed training</h3>
-          <p>Data-parallel scale-out over ZeroMQ: collectives, gradient workers and a topology planner; tensor/pipeline parallelism is on the roadmap.</p>
-        </a>
-        <a class="card doc-link" href="/CortexJ-site/docs/platform/" data-rise>
-          <h3>Research</h3>
-          <p>Model and dataset cards with citations, benchmark modules, the north-star reference chain from CSV to a deployable lockfile.</p>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================== WHO ============================== -->
-  <section id="who">
-    <div class="container">
-      <p class="label" data-rise>// who it's for</p>
-      <h2 class="section-title" data-rise>Built for JVM teams — legacy to bleeding edge</h2>
-      <p class="section-sub" data-rise="2">The same business code runs from Java 8 to Java 25; platform modules pick up what each JVM offers, from fixed thread pools to virtual threads.</p>
-      <div class="grid cols-2">
-        <div class="card" data-rise><h3>Java teams adding AI</h3><p>Run capable local models inside your JVM stack. One Maven dependency, no Python sidecar, no hand-rolled bindings.</p></div>
-        <div class="card" data-rise><h3>Enterprise & air-gapped</h3><p>Pinned model lockfiles, verified air-gap bundles, offline re-resolution. Reproducible deployments by construction.</p></div>
-        <div class="card" data-rise><h3>Legacy Java 8–11 stacks</h3><p>Bring modern AI features to old applications — the same code that runs on Java 25 compiles for Java 8.</p></div>
-        <div class="card" data-rise><h3>Runtime & repository authors</h3><p>A public SPI, declarative policies and a technology compatibility kit for your provider.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================== STATUS ============================== -->
-  <section id="status">
-    <div class="container">
-      <p class="label" data-rise>// status</p>
-      <h2 class="section-title" data-rise>What ships today: the Runtime</h2>
-      <p class="section-sub" data-rise="2">No slideware — every claim below is verified locally on JDK 25, including live end-to-end runs against real ONNX and GGUF models (embeddings, generation, lockfiles, bundles). The cards below track the shipped Runtime foundation; the platform tracks beyond it ship as incubating 0.x modules and are documented under Platform tracks.</p>
-      <div class="stats" data-rise>
-        <div class="stat"><strong>1500+</strong><span>tests · verified live on real models</span></div>
-        <div class="stat"><strong>0</strong><span>SpotBugs findings, full reactor</span></div>
-        <div class="stat"><strong>5</strong><span>LTS starters, Java 8 to 25</span></div>
-        <div class="stat"><strong>11</strong><span>platform tracks shipped as 0.x</span></div>
-      </div>
-      <div class="grid cols-3">
-        <div class="card"><h3>Architecture skeleton</h3><p>API, SPI and module boundaries — the enforced layering the platform is built on.</p></div>
-        <div class="card"><h3>Resolution & cache</h3><p>Model resolution — local, Hugging Face, HTTP — checksum-safe cache, immutable revisions.</p></div>
-        <div class="card"><h3>Runtime SPI & core</h3><p>ServiceLoader runtime registry, core platform bootstrap, OpenAI-compatible remote provider.</p></div>
-        <div class="card"><h3>Real llama.cpp execution</h3><p>Managed llama-server bridge: health polling, blocking + SSE streaming, graceful shutdown.</p></div>
-        <div class="card"><h3>Explainable planner</h3><p>Candidates, hard constraints, scoring, memory estimates — explainable deterministic plans.</p></div>
-        <div class="card"><h3>Java 8 → 25</h3><p>Platform modules for every LTS line, starters with wrong-JVM detection, legacy verified on real JDK 8 and 11.</p></div>
-        <div class="card"><h3>Production</h3><p>Lockfiles, air-gap bundles, OpenTelemetry, Spring AI and LangChain4j adapters.</p></div>
-        <div class="card"><h3>Extended runtimes</h3><p>DJL provider with an honest engine probe; the remote provider covers vendor endpoints.</p></div>
-        <div class="card"><h3>Converters & declarative</h3><p>Deterministic GGUF/Safetensors converters, provenance manifests, declarative @ModelPrompt API.</p></div>
-      </div>
-      <span class="status">1.0.0-RC1 · Maven Central release coming</span>
-    </div>
-  </section>
-
-  <!-- ============================== QUICK START ============================== -->
-  <section id="quick-start">
-    <div class="container">
-      <p class="label" data-rise>// quick start</p>
-      <h2 class="section-title" data-rise>One starter, matching your JVM</h2>
-      <p class="section-sub" data-rise="2">Add the BOM, add the starter for your JVM line, load a model. The starter validates the JVM at bootstrap — a mismatch fails fast with an actionable diagnostic.</p>
-      <div class="tabs" role="tablist" aria-label="Java version">
-        <button class="tab" data-starter="java8" type="button">Java 8</button>
-        <button class="tab" data-starter="java11" type="button">Java 11</button>
-        <button class="tab" data-starter="java17" type="button">Java 17</button>
-        <button class="tab active" data-starter="java21" type="button">Java 21</button>
-        <button class="tab" data-starter="java25" type="button">Java 25</button>
-      </div>
-      <div class="code-card" data-rise>
-        <div class="code-card-head"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="code-card-title">pom.xml</span><button class="copy-btn" type="button" aria-label="Copy code">Copy</button></div>
-<pre><code>&lt;<span class="tk-k">repositories</span>&gt;
-    &lt;<span class="tk-k">repository</span>&gt;
-        &lt;<span class="tk-k">id</span>&gt;cortexj&lt;/<span class="tk-k">id</span>&gt;
-        &lt;<span class="tk-k">url</span>&gt;https://okostiukevych.github.io/CortexJ-maven/&lt;/<span class="tk-k">url</span>&gt;
-    &lt;/<span class="tk-k">repository</span>&gt;
-&lt;/<span class="tk-k">repositories</span>&gt;
-
-&lt;<span class="tk-k">dependencyManagement</span>&gt;
-    &lt;<span class="tk-k">dependencies</span>&gt;
-        &lt;<span class="tk-k">dependency</span>&gt;
-            &lt;<span class="tk-k">groupId</span>&gt;io.cortexj&lt;/<span class="tk-k">groupId</span>&gt;
-            &lt;<span class="tk-k">artifactId</span>&gt;cortexj-bom&lt;/<span class="tk-k">artifactId</span>&gt;
-            &lt;<span class="tk-k">version</span>&gt;1.0.0-RC1&lt;/<span class="tk-k">version</span>&gt;
-            &lt;<span class="tk-k">type</span>&gt;pom&lt;/<span class="tk-k">type</span>&gt;
-            &lt;<span class="tk-k">scope</span>&gt;import&lt;/<span class="tk-k">scope</span>&gt;
-        &lt;/<span class="tk-k">dependency</span>&gt;
-    &lt;/<span class="tk-k">dependencies</span>&gt;
-&lt;/<span class="tk-k">dependencyManagement</span>&gt;
-
-&lt;<span class="tk-k">dependency</span>&gt;
-    &lt;<span class="tk-k">groupId</span>&gt;io.cortexj&lt;/<span class="tk-k">groupId</span>&gt;
-    &lt;<span class="tk-k">artifactId</span>&gt;<span id="starter-artifact">cortexj-starter-java21</span>&lt;/<span class="tk-k">artifactId</span>&gt;
-&lt;/<span class="tk-k">dependency</span>&gt;</code></pre>
-      </div>
-      <div class="starters">
-        <span class="starter-chip">cortexj-starter-java8</span>
-        <span class="starter-chip">cortexj-starter-java11</span>
-        <span class="starter-chip">cortexj-starter-java17</span>
-        <span class="starter-chip">cortexj-starter-java21</span>
-        <span class="starter-chip">cortexj-starter-java25</span>
-      </div>
-      <p class="quick-note">The business code is identical across all five starters — pick once, never think about it again.</p>
-      <div class="doc-links">
-        <a class="doc-link" href="/CortexJ-site/docs/installation/"><strong>Installation</strong><span>BOM + the starter for your JVM</span></a>
-        <a class="doc-link" href="/CortexJ-site/docs/quickstart/"><strong>Quickstart</strong><span>First generation, explained step by step</span></a>
-        <a class="doc-link" href="/CortexJ-site/docs/concepts/planner/"><strong>Concepts</strong><span>How the planner decides — and why</span></a>
-        <a class="doc-link" href="https://github.com/okostiukevych/CortexJ/releases/tag/1.0.0-RC1"><strong>Release 1.0.0-RC1</strong><span>Artifacts, verified lanes, honest limits</span></a>
-        <a class="doc-link" href="/CortexJ-site/docs/cli/"><strong>CLI reference</strong><span>doctor · plan · pull · run</span></a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================== FAQ ============================== -->
-  <section id="faq">
-    <div class="container">
-      <p class="label" data-rise>// faq</p>
-      <h2 class="section-title" data-rise>Frequently asked, honestly answered</h2>
-      <div class="faq">
-        <details class="faq-item" data-rise>
-          <summary>Which Java versions are supported?</summary>
-          <p>All LTS lines — Java 8, 11, 17, 21 and 25 — through dedicated starters. Business code is identical across them; a starter/JVM mismatch fails fast with an actionable diagnostic (<code>CORTEXJ-CONF-0002</code>).</p>
-        </details>
-        <details class="faq-item" data-rise>
-          <summary>Do I need Python?</summary>
-          <p>No. CortexJ is JVM-only. For local GGUF text generation you point the llama.cpp provider at a <code>llama-server</code> binary; ONNX embeddings run on the bundled ONNX Runtime (CPU).</p>
-        </details>
-        <details class="faq-item" data-rise>
-          <summary>Is GPU supported?</summary>
-          <p>Honestly: the llama.cpp provider plans GGUF for CPU and GPU; the bundled ONNX Runtime ships the CPU execution provider only. Hardware is probed, never assumed — unusable candidates are rejected with reasons in the plan, not at runtime.</p>
-        </details>
-        <details class="faq-item" data-rise>
-          <summary>Is this only an inference runtime?</summary>
-          <p>CortexJ Runtime (inference) is the production product — but the platform tracks around it are shipped as incubating modules: interactive <a href="/CortexJ-site/docs/platform/lab/">Lab</a>, typed <a href="/CortexJ-site/docs/platform/data/">Data frames</a>, reproducible <a href="/CortexJ-site/docs/platform/experiments/">Experiments</a>, <a href="/CortexJ-site/docs/platform/training/">Training with LoRA</a> and a <a href="/CortexJ-site/docs/platform/tensor/">Tensor/Autograd stack</a>. The Runtime never depends on them; they feed into it.</p>
-        </details>
-        <details class="faq-item" data-rise>
-          <summary>How is this different from Spring AI or LangChain4j?</summary>
-          <p>Those are application frameworks; CortexJ is the runtime layer underneath. It resolves models, plans execution and manages runtimes — and ships adapters that expose CortexJ models as Spring AI / LangChain4j <code>ChatModel</code>, <code>StreamingChatModel</code> and <code>EmbeddingModel</code> implementations, so your framework-side code stays unchanged.</p>
-        </details>
-        <details class="faq-item" data-rise>
-          <summary>When will it be on Maven Central?</summary>
-          <p>Before a public 1.0: Maven Central publishing, the API stability freeze process and a signed-off production security review are the remaining gates. Until then the platform is <code>1.0.0-RC1</code>, documented exactly as it exists.</p>
-        </details>
-      </div>
-    </div>
-  </section>
-</main>
-<footer>
-  <div class="container footer-inner">
-    <div class="footer-brand">
-      <a class="brand" href="#top">Cortex<span>J</span></a>
-      <p class="footer-tag">AI runtime orchestration and model portability for the JVM.</p>
-    </div>
-    <nav class="footer-col" aria-label="Documentation">
-      <p class="footer-title">Docs</p>
-      <a href="/CortexJ-site/docs/installation/">Installation</a>
-      <a href="/CortexJ-site/docs/quickstart/">Quickstart</a>
-      <a href="/CortexJ-site/docs/concepts/planner/">Concepts</a>
-      <a href="/CortexJ-site/docs/cli/">CLI reference</a>
-      <a href="/CortexJ-site/docs/production/">Production</a>
-      <a href="/CortexJ-site/docs/reference/api-stability/">API stability</a>
-    </nav>
-    <div class="footer-col">
-      <p class="footer-title">Project</p>
-      <span>Apache License 2.0</span>
-      <span>1.0.0-RC1 · pre-release</span>
-      <a href="https://github.com/okostiukevych/CortexJ-site">Site source</a>
-    </div>
-  </div>
-  <div class="container footer-bottom">
-    <p class="footer-meta">© 2026 CortexJ · okostiukevych.github.io/CortexJ-site</p>
-  </div>
-</footer>
-<script>
-(function () {
-  // progressive enhancement: content is visible without JS; reveal only upgrades it
-  document.documentElement.classList.add('js');
-  var reveal = function (el) { el.classList.add('in'); };
-  var observer = ('IntersectionObserver' in window)
-    ? new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) { reveal(entry.target); observer.unobserve(entry.target); }
+    </div></section>
+    <section class="section-space production" id="production" aria-labelledby="production-title"><div class="wrap prod-layout"><div><div class="eyebrow">06 / ENGINEERED FOR REAL SYSTEMS</div><h2 class="section-h" id="production-title">The path to production<br>should be inspectable.</h2><p class="section-lead">Model execution is infrastructure. CortexJ treats revisions, resource constraints, deployment integrity, and operational failure as first-class concerns.</p><div class="readiness-note"><strong>Current status: 1.0.0-RC1.</strong> Runtime functionality is available for evaluation. Maven Central publication is pending; research, training and data-science tracks are separately documented incubating modules. Validate native/runtime support against your own target environment before production rollout.</div><div style="margin-top:25px"><a href="https://okostiukevych.github.io/CortexJ-site/docs/production/" class="link-arrow">Production guide →</a></div></div>
+      <div class="prod-grid"><div class="prod-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m12 2 8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/><path d="m8 12 3 3 5-6"/></svg><strong>Artifact integrity</strong><p>Immutable revisions and checksum-verified model files.</p></div><div class="prod-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 4h14v16H5zM8 9h8m-8 4h8m-8 4h4"/></svg><strong>Lockfiles</strong><p>Pin execution decisions and reproducible model resolution.</p></div><div class="prod-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 8h18v12H3zM8 8V5h8v3M8 13h8m-8 4h5"/></svg><strong>Offline bundles</strong><p>Verify and move model artifacts into air-gapped environments.</p></div><div class="prod-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 17h3l3-9 4 12 3-6h3"/><circle cx="12" cy="12" r="9"/></svg><strong>Observability</strong><p>OpenTelemetry instrumentation and typed error diagnostics.</p></div></div>
+    </div></section>
+    <section class="outro"><div class="wrap"><div class="outro-panel"><div class="eyebrow">BUILD ON THE JVM</div><h2>Keep your Java stack.<br>Make AI execution portable.</h2><p>Clone the repository, follow the quickstart, and try CortexJ with a compatible model in your own environment. Contributions and real-world feedback are welcome.</p><div class="hero-ctas"><a href="https://okostiukevych.github.io/CortexJ-site/docs/quickstart/" class="btn btn-primary">Read the quickstart <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a><a href="https://github.com/okostiukevych/CortexJ" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Explore the source ↗</a></div></div></div></section>
+  </main>
+  <footer class="site-footer"><div class="wrap footer-top"><div class="footer-brand"><a class="wordmark" href="#top"><span class="brand-mark" aria-hidden="true"><span>C</span></span><span>Cortex<b>J</b></span></a><p>Portable, explainable AI model execution for the JVM. An open-source project built around deterministic planning and practical interoperability.</p></div><div class="footer-links"><div><h3>Explore</h3><a href="#why">Why CortexJ</a><a href="#architecture">How it works</a><a href="#runtimes">Runtimes</a><a href="#integrations">Integrations</a></div><div><h3>Documentation</h3><a href="https://okostiukevych.github.io/CortexJ-site/docs/installation/">Installation</a><a href="https://okostiukevych.github.io/CortexJ-site/docs/quickstart/">Quickstart</a><a href="https://okostiukevych.github.io/CortexJ-site/docs/concepts/planner/">Execution planner</a><a href="https://okostiukevych.github.io/CortexJ-site/docs/production/">Production</a></div><div><h3>Community</h3><a href="https://github.com/okostiukevych/CortexJ" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://github.com/okostiukevych/CortexJ/issues" target="_blank" rel="noopener noreferrer">Issues / Feedback</a><a href="https://github.com/okostiukevych/CortexJ/releases" target="_blank" rel="noopener noreferrer">Releases</a><a href="https://github.com/okostiukevych/CortexJ/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">Apache 2.0</a></div></div></div><div class="wrap footer-bottom"><span>© <span id="year">2026</span> CortexJ. Open source under Apache License 2.0.</span><span>Built for JVM engineers · Java 8 → 25</span></div></footer>
+  <script>
+    (() => {
+      'use strict';
+      const release = '1.0.0-RC1';
+      const escapeHtml = value => value.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+      const snippets = {
+        maven: version => `<repositories>\n    <repository>\n        <id>cortexj</id>\n        <url>https://okostiukevych.github.io/CortexJ-maven/</url>\n    </repository>\n</repositories>\n\n<dependencyManagement>\n    <dependencies>\n        <dependency>\n            <groupId>io.cortexj</groupId>\n            <artifactId>cortexj-bom</artifactId>\n            <version>${release}</version>\n            <type>pom</type>\n            <scope>import</scope>\n        </dependency>\n    </dependencies>\n</dependencyManagement>\n\n<dependencies>\n    <dependency>\n        <groupId>io.cortexj</groupId>\n        <artifactId>cortexj-starter-java${version}</artifactId>\n    </dependency>\n</dependencies>`,
+        java: () => `import io.cortexj.CortexJ;\nimport io.cortexj.model.ModelHandle;\nimport io.cortexj.model.ModelReference;\nimport io.cortexj.inference.GenerationRequest;\nimport io.cortexj.inference.GenerationResponse;\nimport io.cortexj.inference.TextGenerationCapability;\n\npublic class App {\n    public static void main(String[] args) {\n        try (CortexJ cortex = CortexJ.builder().build();\n             ModelHandle model = cortex.models().load(\n                 ModelReference.of("Qwen/Qwen3-8B"))) {\n\n            GenerationResponse response = model\n                .capability(TextGenerationCapability.class)\n                .generate(GenerationRequest.prompt(\n                    "Explain CQRS briefly"));\n\n            System.out.println(response.text());\n        }\n    }\n}`,
+        cli: () => `# Use the built CortexJ CLI JAR\njava -jar cortexj-cli-${release}.jar doctor\n\n# Inspect the plan before running a model\njava -jar cortexj-cli-${release}.jar plan Qwen/Qwen3-8B-GGUF\n\n# Run generation (requires a compatible runtime)\njava -jar cortexj-cli-${release}.jar run Qwen/Qwen3-8B --prompt "Explain CQRS"\n\n# Discover installed runtime providers\njava -jar cortexj-cli-${release}.jar runtimes`
+      };
+      const tips = {
+        maven: 'Use the BOM and the starter matching your Java version. Configure a compatible model runtime before executing.',
+        java: 'Actual CortexJ API example. Model availability, installed runtimes and hardware requirements depend on your environment.',
+        cli: 'The CLI JAR comes from the project build. Commands inspect and run against your own installed runtimes.'
+      };
+      const filename = {maven:'pom.xml',java:'App.java',cli:'terminal / shell'};
+      const copyLabel = document.getElementById('copy-label');
+      const tabButtons = [...document.querySelectorAll('[data-tab]')];
+      const versions = [...document.querySelectorAll('[data-java]')];
+      const content = document.getElementById('code-content');
+      const menuToggle = document.getElementById('menu-toggle');
+      const menu = document.getElementById('primary-nav');
+      let activeTab = 'maven';
+      let activeJava = '21';
+      let copiedReset;
+      const syntax = value => {
+        const safe = escapeHtml(value);
+        if(activeTab === 'maven') return safe.replace(/(&lt;\/?)([\w-]+)(&gt;)/g, '<span class="code-key">$1$2$3</span>').replace(/(1\.0\.0-RC1|cortexj-starter-java\d+)/g, '<span class="code-string">$1</span>');
+        if(activeTab === 'cli') return safe.split('\n').map(line => line.trim().startsWith('#') ? `<span class="code-comment">${line}</span>` : line.replace(/^(java)/, '<span class="code-key">$1</span>')).join('\n');
+        return safe.replace(/("[^"\n]*")/g, '<span class="code-string">$1</span>').replace(/\b(import|public|class|static|void|try|new)\b/g, '<span class="code-key">$1</span>').replace(/\b(CortexJ|ModelHandle|ModelReference|GenerationResponse|GenerationRequest|TextGenerationCapability|String|System)\b/g, '<span class="code-type">$1</span>');
+      };
+      const render = () => {
+        content.innerHTML = syntax(snippets[activeTab](activeJava));
+        document.getElementById('code-filename').textContent = filename[activeTab];
+        document.getElementById('code-tip').textContent = tips[activeTab];
+        document.getElementById('code-panel').setAttribute('aria-labelledby', `tab-${activeTab}`);
+        tabButtons.forEach(tab => {const selected = tab.dataset.tab === activeTab;tab.setAttribute('aria-selected',String(selected));tab.tabIndex = selected ? 0 : -1;});
+        versions.forEach(button => button.setAttribute('aria-pressed',String(button.dataset.java === activeJava)));
+        document.querySelector('.code-scroll').scrollTop = 0;
+        copyLabel.textContent = 'Copy';
+      };
+      tabButtons.forEach((button,index) => {
+        button.addEventListener('click',() => {activeTab = button.dataset.tab;render();});
+        button.addEventListener('keydown',event=>{
+          if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
+          event.preventDefault();
+          let next = index;
+          if(event.key==='Home') next=0;
+          else if(event.key==='End') next=tabButtons.length-1;
+          else next = (index+(event.key==='ArrowRight'?1:-1)+tabButtons.length)%tabButtons.length;
+          activeTab=tabButtons[next].dataset.tab;render();tabButtons[next].focus();
         });
-      }, { rootMargin: '0px 0px -8% 0px' })
-    : null;
-  document.querySelectorAll('[data-rise]').forEach(function (el) {
-    if (observer) { observer.observe(el); } else { reveal(el); }
-  });
-  // safety net: never leave content hidden (slow IO, headless, print)
-  setTimeout(function () {
-    document.querySelectorAll('[data-rise]:not(.in)').forEach(reveal);
-  }, 900);
-
-  document.querySelectorAll(".code-card").forEach(function (card) {
-    var btn = card.querySelector(".copy-btn");
-    if (!btn) return;
-    btn.addEventListener("click", function () {
-      navigator.clipboard.writeText(card.querySelector("pre").innerText).then(function () {
-        btn.textContent = "Copied";
-        setTimeout(function () { btn.textContent = "Copy"; }, 1500);
       });
-    });
-  });
-  var starter = document.getElementById("starter-artifact");
-  if (starter) {
-    document.querySelectorAll(".tab").forEach(function (tab) {
-      tab.addEventListener("click", function () {
-        document.querySelectorAll(".tab").forEach(function (t) { t.classList.remove("active"); });
-        tab.classList.add("active");
-        starter.textContent = "cortexj-starter-" + tab.dataset.starter;
+      versions.forEach(button => button.addEventListener('click',() => {activeJava = button.dataset.java;render();}));
+      document.getElementById('copy-code').addEventListener('click',async () => {
+        const text = snippets[activeTab](activeJava);
+        let ok = false;
+        try {if(navigator.clipboard && window.isSecureContext) {await navigator.clipboard.writeText(text);ok=true;}}
+        catch(e) {ok=false;}
+        if(!ok){
+          const tmp=document.createElement('textarea');tmp.value=text;tmp.style.position='fixed';tmp.style.top='-1000px';document.body.appendChild(tmp);tmp.select();
+          try{ok=document.execCommand('copy');}catch(e){ok=false;}tmp.remove();
+        }
+        clearTimeout(copiedReset);copyLabel.textContent=ok?'Copied!':'Select code to copy';
+        copiedReset=setTimeout(()=>copyLabel.textContent='Copy',2500);
       });
-    });
-  }
-})();
-</script>
+      const closeMenu = () => {menu.classList.remove('open');menuToggle.setAttribute('aria-expanded','false');menuToggle.setAttribute('aria-label','Open menu');};
+      menuToggle.addEventListener('click',()=>{const next=menuToggle.getAttribute('aria-expanded')!=='true';menuToggle.setAttribute('aria-expanded',String(next));menuToggle.setAttribute('aria-label',next?'Close menu':'Open menu');menu.classList.toggle('open',next);});
+      menu.querySelectorAll('a').forEach(link=>link.addEventListener('click',closeMenu));
+      document.addEventListener('keydown',event=>{if(event.key==='Escape') closeMenu();});
+      document.addEventListener('click',event=>{if(!menu.contains(event.target)&&!menuToggle.contains(event.target)) closeMenu();});
+      document.getElementById('year').textContent=String(new Date().getFullYear());
+      render();
+    })();
+  </script>
 </body>
 </html>

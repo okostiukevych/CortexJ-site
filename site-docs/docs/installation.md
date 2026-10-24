@@ -27,6 +27,9 @@ only need the repository block:
 </repositories>
 ```
 
+Release notes for the current version:
+[1.0.0-RC1](https://github.com/okostiukevych/CortexJ/releases/tag/1.0.0-RC1).
+
 !!! tip "JitPack alternative"
     The same tag is built by JitPack under the `com.github.okostiukevych.CortexJ`
     group id. There the BOM does not apply (JitPack rewrites the modules'

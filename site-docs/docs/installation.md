@@ -28,8 +28,10 @@ only need the repository block:
 ```
 
 !!! tip "JitPack alternative"
-    The same artifacts are served by JitPack under the `com.github.okostiukevych.CortexJ`
-    group id, with no repository block of your own:
+    The same tag is built by JitPack under the `com.github.okostiukevych.CortexJ`
+    group id. There the BOM does not apply (JitPack rewrites the modules'
+    coordinates but not the BOM's managed entries), so the version is named
+    explicitly:
 
     ```xml
     <repository>

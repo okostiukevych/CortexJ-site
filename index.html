@@ -314,7 +314,14 @@
       </div>
       <div class="code-card" data-rise>
         <div class="code-card-head"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="code-card-title">pom.xml</span><button class="copy-btn" type="button" aria-label="Copy code">Copy</button></div>
-<pre><code>&lt;<span class="tk-k">dependencyManagement</span>&gt;
+<pre><code>&lt;<span class="tk-k">repositories</span>&gt;
+    &lt;<span class="tk-k">repository</span>&gt;
+        &lt;<span class="tk-k">id</span>&gt;cortexj&lt;/<span class="tk-k">id</span>&gt;
+        &lt;<span class="tk-k">url</span>&gt;https://okostiukevych.github.io/CortexJ-maven/&lt;/<span class="tk-k">url</span>&gt;
+    &lt;/<span class="tk-k">repository</span>&gt;
+&lt;/<span class="tk-k">repositories</span>&gt;
+
+&lt;<span class="tk-k">dependencyManagement</span>&gt;
     &lt;<span class="tk-k">dependencies</span>&gt;
         &lt;<span class="tk-k">dependency</span>&gt;
             &lt;<span class="tk-k">groupId</span>&gt;io.cortexj&lt;/<span class="tk-k">groupId</span>&gt;

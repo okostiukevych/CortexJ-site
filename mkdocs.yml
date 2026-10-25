@@ -37,6 +37,7 @@ nav:
       - Error codes: docs/reference/error-codes.md
       - API stability: docs/reference/api-stability.md
       - Compatibility matrix: docs/reference/compatibility-matrix.md
+      - Measured performance: docs/reference/performance.md
 theme:
   name: material
   language: en

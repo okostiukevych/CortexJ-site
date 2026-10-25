@@ -41,6 +41,7 @@ handles badly, the fix starts with adding the row to the matrix.
 
 ## Related
 
+- [Measured performance](performance.md) — the live-runtime KPI numbers.
 - [API stability](api-stability.md) — what the 0.x/1.0 labels promise.
 - [Platform tracks](../platform/index.md) — the incubating tracks that sit
   behind the runtime.

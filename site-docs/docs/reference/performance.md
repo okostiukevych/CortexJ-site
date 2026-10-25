@@ -14,6 +14,7 @@ measurement contract lives in CI, the hardware-specific numbers live here.
 | Workload | prompt "Once upon a time, in a land far away,", 24 tokens, greedy, seed 42 |
 | Protocol | 20 measured iterations after 3 warmup (per leg) |
 | Machine | macOS arm64 (Apple Silicon), local model, same JVM for both legs |
+| Framework heap (no model) | 1 MB after warm-up (`PlatformOverheadTest`) |
 | Model files | downloaded into a `@TempDir`, **deleted when the run ends** |
 
 ## Results (§124.1 — time to first local response)
@@ -37,9 +38,14 @@ measurement contract lives in CI, the hardware-specific numbers live here.
 - **Framework throughput degradation: −3.0%** (i.e. the platform leg was not
   slower) — inside the `< 5%` target.
 
+- **Framework memory overhead without the model: 1 MB** (target `§124.2`:
+  `< 100 MB`) — the JVM heap the fully-warmed platform (discovery, descriptors,
+  planner, telemetry) itself costs. Measured by `PlatformOverheadTest`
+  (`@Tag("perf")`, fake engine, heap settled after 300 warm plans).
+
 The dispatch-level overhead that does not show up at this coarse timescale is
-what the second harness pins down: `PlatformOverheadTest` (`@Tag("perf")`) uses a
-fake instant engine to isolate pure platform dispatch cost per call.
+what the same fake-engine harness pins down: p50 = 2.6 µs, p99 = 7.3 µs of pure
+platform dispatch per generate call over 1000 calls.
 
 ## How to reproduce
 
@@ -47,7 +53,7 @@ fake instant engine to isolate pure platform dispatch cost per call.
 # full live KPI harness (downloads a ~460 MB model into a TempDir, deletes it after)
 mvn -B -pl benchmarks -Pperf -Dtest=LiveRuntimeKpiTest -DfailIfNoSpecifiedTests=false test
 
-# pure dispatch overhead (no model, no engine)
+# pure dispatch + framework-heap overhead (no model, no engine)
 mvn -B -Pperf -pl core -Dtest=PlatformOverheadTest -DfailIfNoSpecifiedTests=false test
 ```
 
@@ -64,7 +70,7 @@ the CI-measured KPI that runs on every lane is the
 - The JVM heap delta of a live run is dominated by the engine process/model
   weights (engine-owned), not by framework allocation — the `< 100 MB framework
   overhead` clause of §124.2 targets framework-own memory and is what the
-  fake-engine harness measures.
+  fake-engine harness measures (1 MB, published above).
 - `-Pperf` never runs in default CI (needs a real download; gated by
   `excludedGroups=perf`).
 

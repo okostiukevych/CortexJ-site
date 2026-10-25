@@ -30,6 +30,7 @@ nav:
       - Experiments: docs/platform/experiments.md
       - Training & PEFT: docs/platform/training.md
       - Tensor & Autograd: docs/platform/tensor.md
+      - Graduation roadmap: docs/platform/roadmap.md
   - Reference:
       - Configuration properties: docs/reference/configuration-properties.md
       - Runtime options: docs/reference/runtime-options.md

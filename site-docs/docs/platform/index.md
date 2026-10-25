@@ -49,6 +49,7 @@ CSV dataset → typed Frame → fingerprint → batches/split
 - [Experiments](experiments.md) — reproducible run capture.
 - [Training & PEFT](training.md) — Trainer API, LoRA, distributed.
 - [Tensor & Autograd](tensor.md) — engine-neutral tensors, gradients, NN modules.
+- [Graduation roadmap](roadmap.md) — the plan to promote tracks from incubating `0.x` to stable `1.0`.
 
 The [Runtime](../index.md) documentation covers the production path these tracks
 feed into.

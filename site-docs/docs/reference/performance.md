@@ -17,14 +17,14 @@ measurement contract lives in CI, the hardware-specific numbers live here.
 | Framework heap (no model) | 1 MB after warm-up (`PlatformOverheadTest`) |
 | Model files | downloaded into a `@TempDir`, **deleted when the run ends** |
 
-## Results (§124.1 — time to first local response)
+## Results — time to first local response
 
 | Metric | Measured | Target |
 |---|---|---|
 | Download (460 MB from Hugging Face) | **8.7 s** | — |
 | Cold time-to-first-response (manifest → plan → server → first tokens) | **0.87 s** | ≤ 600 s |
 
-## Results (§124.2 — framework overhead vs direct engine)
+## Results — framework overhead vs direct engine
 
 | Metric | Platform leg | Direct leg (llama-server HTTP) | Target |
 |---|---|---|---|
@@ -38,7 +38,7 @@ measurement contract lives in CI, the hardware-specific numbers live here.
 - **Framework throughput degradation: −3.0%** (i.e. the platform leg was not
   slower) — inside the `< 5%` target.
 
-- **Framework memory overhead without the model: 1 MB** (target `§124.2`:
+- **Framework memory overhead without the model: 1 MB** (KPI target:
   `< 100 MB`) — the JVM heap the fully-warmed platform (discovery, descriptors,
   planner, telemetry) itself costs. Measured by `PlatformOverheadTest`
   (`@Tag("perf")`, fake engine, heap settled after 300 warm plans).
@@ -69,7 +69,7 @@ the CI-measured KPI that runs on every lane is the
   before quoting these numbers elsewhere.
 - The JVM heap delta of a live run is dominated by the engine process/model
   weights (engine-owned), not by framework allocation — the `< 100 MB framework
-  overhead` clause of §124.2 targets framework-own memory and is what the
+  overhead` clause targets framework-own memory and is what the
   fake-engine harness measures (1 MB, published above).
 - `-Pperf` never runs in default CI (needs a real download; gated by
   `excludedGroups=perf`).
@@ -78,5 +78,5 @@ the CI-measured KPI that runs on every lane is the
 
 - [Compatibility matrix](compatibility-matrix.md) — the CI-measured KPI
   (valid-plan rate over a curated matrix).
-- [API stability](api-stability.md) — what 1.0.0 guarantees at the contract
+- [API stability](api-stability.md) — what the GA release guarantees at the contract
   level.

@@ -33,10 +33,10 @@ The `compat` Maven profile runs `japicmp` binary-compatibility checks against a
 published baseline once a non-snapshot release exists:
 
 ```bash
-mvn -Pcompat verify -Dcortexj.api.baseline=1.0.0
+mvn -Pcompat verify -Dcortexj.api.baseline=1.0.1
 ```
 
-Since the 1.0.0 release the profile is enforced in CI (the `compat` job runs
+Since the first GA release the profile is enforced in CI (the `compat` job runs
 japicmp against the latest published baseline in the CortexJ Maven repository):
 CI fails on any binary-breaking change to the Public API tier without a major
 bump. The current baseline is 1.0.1; adjust the property when the next release

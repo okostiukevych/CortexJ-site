@@ -2,7 +2,7 @@
 
 The [API stability tiers](api-stability.md) guarantee what does **not** break.
 This page tracks what the runtime **does today**, and it is the source of the
-§124.3 KPI: "planner valid-plan rate on curated compatibility matrix: ≥ 99%".
+Product KPI: "planner valid-plan rate on curated compatibility matrix: ≥ 99%".
 
 ## How the number is produced
 

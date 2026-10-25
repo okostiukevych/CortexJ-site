@@ -102,8 +102,8 @@ model's `tokenizer.json` next to the weights automatically.
 ## The same thing via the CLI
 
 ```bash
-java -jar cortexj-cli-1.0.0-RC1.jar doctor
-java -jar cortexj-cli-1.0.0-RC1.jar run Qwen/Qwen3-8B --prompt "hi"
+java -jar cortexj-cli-1.0.1.jar doctor
+java -jar cortexj-cli-1.0.1.jar run Qwen/Qwen3-8B --prompt "hi"
 ```
 
 `doctor` checks your environment (runtimes, hardware, cache) before you depend

@@ -17,13 +17,13 @@ dependency boundaries. The umbrella tracking issue for the whole campaign is
 
 | Track | Maturity | Graduation scope |
 |---|---|---|
-| Runtime / inference | beta (1.0.0-RC1) | not in scope — already the production product |
+| Runtime / inference | beta (1.0.1) | not in scope — already the production product |
 | Data | incubating | **pilot promotion** — smallest closed contract |
 | Experiments | incubating | early promotion, after Data process is proven |
 | Lab / Notebook | incubating | renderers, protocol conformance, cleanup, OS matrix |
 | Tensor / Autograd | incubating | the largest gate: op conformance, gradient suite, serialization |
 | Train / PEFT | incubating | checkpoint/resume, precision semantics, provenance capture |
-| Research | incubating | first: publish its Definition of Done (a spec gap today) |
+| Research | incubating | first: publish its Definition of Done (a documentation gap today) |
 
 See the [platform overview](index.md) for what each track contains today and the
 [API stability tiers](../reference/api-stability.md) for what the 0.x label
@@ -48,18 +48,18 @@ contract:
    API stability, README, landing page).
 7. A promotion ADR is published: what is frozen, what remains follow-up — with
    issue numbers.
-8. A scope-gate report per spec §159 confirms no claim exceeds what tests prove.
+8. A scope-gate report confirms no claim exceeds what tests prove.
 
 ## Sequencing
 
 | Phase | Work | Key gate closed | Issues |
 |---|---|---|---|
-| G0 — infrastructure | per-track versions, TCK runner for track SPIs, per-track japicmp profile, graduation runbook, Research DoD written into the spec | graduation becomes mechanically possible for any track | [#190](https://github.com/okostiukevych/CortexJ/issues/190)–[#194](https://github.com/okostiukevych/CortexJ/issues/194) |
+| G0 — infrastructure | per-track versions, TCK runner for track SPIs, per-track japicmp profile, graduation runbook, Research Definition of Done written down | graduation becomes mechanically possible for any track | [#190](https://github.com/okostiukevych/CortexJ/issues/190)–[#194](https://github.com/okostiukevych/CortexJ/issues/194) |
 | Data (pilot) | all 8 adapters through `DataSourceContract`; cross-adapter fingerprint determinism | first promotion — the process itself is validated | [#195](https://github.com/okostiukevych/CortexJ/issues/195)–[#197](https://github.com/okostiukevych/CortexJ/issues/197) |
 | Experiments | store TCK, provenance schema versioning, retention policy | second promotion | [#198](https://github.com/okostiukevych/CortexJ/issues/198)–[#201](https://github.com/okostiukevych/CortexJ/issues/201) |
-| Lab / Notebook | chart/image renderers, cancellation & cleanup tests, Jupyter wire-protocol conformance, env manifest + export smoke, 3-OS CI matrix | DoD §154 point-by-point | [#202](https://github.com/okostiukevych/CortexJ/issues/202)–[#207](https://github.com/okostiukevych/CortexJ/issues/207) |
-| Tensor / Autograd | golden fixtures ≥25 ops, CPU + Vector backend conformance, shape/broadcast property tests, gradient suite, memory lifecycle, serialization, MLP demo | DoD §156 point-by-point — the largest gate | [#208](https://github.com/okostiukevych/CortexJ/issues/208)–[#217](https://github.com/okostiukevych/CortexJ/issues/217) |
-| Train / PEFT | backend TCK (DJL + remote), E2E checkpoint/resume determinism, memory planner fail-early, explicit mixed-precision semantics, full provenance capture, fail-fast combos | DoD §155 point-by-point | [#218](https://github.com/okostiukevych/CortexJ/issues/218)–[#224](https://github.com/okostiukevych/CortexJ/issues/224) |
+| Lab / Notebook | chart/image renderers, cancellation & cleanup tests, Jupyter wire-protocol conformance, env manifest + export smoke, 3-OS CI matrix | maturity gate point-by-point | [#202](https://github.com/okostiukevych/CortexJ/issues/202)–[#207](https://github.com/okostiukevych/CortexJ/issues/207) |
+| Tensor / Autograd | golden fixtures ≥25 ops, CPU + Vector backend conformance, shape/broadcast property tests, gradient suite, memory lifecycle, serialization, MLP demo | maturity gate point-by-point — the largest gate | [#208](https://github.com/okostiukevych/CortexJ/issues/208)–[#217](https://github.com/okostiukevych/CortexJ/issues/217) |
+| Train / PEFT | backend TCK (DJL + remote), E2E checkpoint/resume determinism, memory planner fail-early, explicit mixed-precision semantics, full provenance capture, fail-fast combos | maturity gate point-by-point | [#218](https://github.com/okostiukevych/CortexJ/issues/218)–[#224](https://github.com/okostiukevych/CortexJ/issues/224) |
 | Research | card schema + store SPI + TCK, citations & rendering, benchmark-harness demo | ratified DoD of its own | [#225](https://github.com/okostiukevych/CortexJ/issues/225)–[#227](https://github.com/okostiukevych/CortexJ/issues/227) |
 
 Research graduates strictly after Tensor/Autograd: the `nn` modules depend on
@@ -74,7 +74,7 @@ the stabilized Tensor/Autograd contract.
   tracker must pass it; external trackers like MLflow stay a follow-up, not a 1.0
   blocker), versioned provenance schema with backward-compat guarantees, and an
   explicit retention default.
-- **Lab** — honest closure of §154: charts/images render in notebooks, cancellation
+- **Lab** — honest closure of the maturity gate: charts/images render in notebooks, cancellation
   and resource cleanup is test-verified, the Jupyter wire protocol has a
   conformance suite, exported notebook → Maven projects build green in CI, and
   the kernel is verified on ubuntu/macos/windows.
@@ -87,7 +87,7 @@ the stabilized Tensor/Autograd contract.
   backend/precision combos fail before expensive execution; every run captures a
   complete provenance manifest (dataset hash, model revision, hyperparameters,
   seed).
-- **Research** — first, a proper Definition of Done is written into the spec
+- **Research** — first, a proper Definition of Done is written down
   (today's known gap); then cards, citations and the benchmark harness are
   stabilized on contract terms.
 

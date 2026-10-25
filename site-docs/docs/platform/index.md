@@ -17,7 +17,7 @@ modules**.
 ## The tracks
 
 | Track | Modules today | Maturity |
-|---|---|---|---|
+|---|---|---|
 | Runtime / inference | `cortexj-api` … `cortexj-server`, CLI | beta |
 | Lab / Notebook | `cortexj-lab-api` (JShell session), `cortexj-notebook` (Jupyter kernel) | incubating |
 | Data | `cortexj-data-api` + CSV / Parquet / JDBC / Tablesaw / Arrow / JSON / Tribuo adapters | incubating |

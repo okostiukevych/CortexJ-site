@@ -17,7 +17,7 @@ dependency boundaries. The umbrella tracking issue for the whole campaign is
 
 | Track | Maturity | Graduation scope |
 |---|---|---|
-| Runtime / inference | beta (1.0.1) | not in scope — already the production product |
+| Runtime / inference | beta (1.0.2) | not in scope — already the production product |
 | Data | incubating | **pilot promotion** — smallest closed contract |
 | Experiments | incubating | early promotion, after Data process is proven |
 | Lab / Notebook | incubating | renderers, protocol conformance, cleanup, OS matrix |

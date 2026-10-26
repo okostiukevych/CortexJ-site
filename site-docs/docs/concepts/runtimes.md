@@ -72,7 +72,7 @@ The probe finds the binary via `CORTEXJ_LLAMACPP_SERVER` /
 
 ```bash
 export CORTEXJ_LLAMACPP_SERVER=/opt/homebrew/bin/llama-server
-java -jar cortexj-cli-1.0.1.jar run ./Qwen3-8B-Q4_K_M.gguf --prompt "hi"
+java -jar cortexj-cli-1.0.2.jar run ./Qwen3-8B-Q4_K_M.gguf --prompt "hi"
 ```
 
 An already-running `llama-server` works too — point the remote runtime at it:
@@ -80,7 +80,7 @@ An already-running `llama-server` works too — point the remote runtime at it:
 ```bash
 llama-server -m Qwen3-8B-Q4_K_M.gguf --port 8080
 export CORTEXJ_REMOTE_BASE_URL=http://localhost:8080
-java -jar cortexj-cli-1.0.1.jar run Qwen/Qwen3-8B-GGUF --prompt "hi"
+java -jar cortexj-cli-1.0.2.jar run Qwen/Qwen3-8B-GGUF --prompt "hi"
 ```
 
 Planning behavior: GGUF formats on CPU/GPU; quantization is read from the filename

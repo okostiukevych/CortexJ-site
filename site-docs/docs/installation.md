@@ -28,7 +28,7 @@ only need the repository block:
 ```
 
 Release notes for the current version:
-[1.0.1](https://github.com/okostiukevych/CortexJ/releases/tag/1.0.1).
+[1.0.2](https://github.com/okostiukevych/CortexJ/releases/tag/1.0.2).
 
 !!! tip "JitPack alternative"
     The same tag is built by JitPack under the `com.github.okostiukevych.CortexJ`
@@ -44,7 +44,7 @@ Release notes for the current version:
     <dependency>
         <groupId>com.github.okostiukevych.CortexJ</groupId>
         <artifactId>cortexj-starter-java21</artifactId>
-        <version>1.0.1</version>
+        <version>1.0.2</version>
     </dependency>
     ```
 
@@ -56,7 +56,7 @@ Release notes for the current version:
         <dependency>
             <groupId>io.cortexj</groupId>
             <artifactId>cortexj-bom</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
@@ -105,7 +105,7 @@ The shaded `cortexj-cli` jar runs unchanged on Java 8 through 25 and reports the
 detected JVM:
 
 ```bash
-java -jar cortexj-cli-1.0.1.jar doctor
+java -jar cortexj-cli-1.0.2.jar doctor
 ```
 
 See the [CLI reference](cli.md) for the full command set.

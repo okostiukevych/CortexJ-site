@@ -12,7 +12,7 @@ hardware is available, whether memory suffices, what the fallback is — and *wh
 chosen execution path was selected.
 
 !!! note "Status"
-    CortexJ is `1.0.1` and not yet on Maven Central. Artifacts are published
+    CortexJ is `1.0.2` and not yet on Maven Central. Artifacts are published
     to the [CortexJ Maven repository](installation.md#1-add-the-cortexj-repository)
     and to JitPack. The documentation describes the working platform as it
     exists today.

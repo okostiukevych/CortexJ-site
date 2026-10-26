@@ -9,7 +9,7 @@ immutable; converted outputs land in the cache with a provenance manifest.
 The bundled `gguf-float` converter narrows F32 tensors to F16 (and widens back):
 
 ```bash
-java -jar cortexj-cli-1.0.1.jar convert ./model.gguf --to f16 --out ./converted
+java -jar cortexj-cli-1.0.2.jar convert ./model.gguf --to f16 --out ./converted
 ```
 
 Semantics (verified against real llama.cpp):

@@ -19,7 +19,7 @@ public final class MyRuntimeProvider implements RuntimeProvider {
     @Override
     public RuntimeDescriptor descriptor() {
         return RuntimeDescriptor.builder(id)
-                .version("1.0.1")
+                .version("1.0.2")
                 .format(ArtifactFormat.GGUF)          // formats you can execute
                 .device(DeviceType.CPU)               // devices you can run on
                 .task(TaskCapability.TEXT_GENERATION) // tasks you support

@@ -12,7 +12,7 @@ The proposal surface is additive — text-only consumers see nothing change:
 ```java
 GenerationResponse response = generator.generate(
         GenerationRequest.builder()
-                .message(ChatMessage.user("weather in Omsk?"))
+                .message(ChatMessage.user("weather in Kiev?"))
                 .tool(ToolDefinition.function("get_weather",
                         "Read the current weather for a city",
                         "{\"type\":\"object\"}"))
@@ -85,7 +85,7 @@ proposals and the conversation history:
 ```java
 ChatModel model = new CortexJChatModel("Qwen/Qwen3-8B");
 
-ChatResponse answer = model.call(new Prompt("weather in Omsk?",
+ChatResponse answer = model.call(new Prompt("weather in Kiev?",
         ToolCallingChatOptions.builder()
                 .toolCallbacks(FunctionToolCallback
                         .builder("get_weather", (Map<String, Object> args) ->
